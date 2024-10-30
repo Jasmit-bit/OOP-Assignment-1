@@ -28,10 +28,11 @@ public class Map {
            for (int x = 0; x < width; x++)
            {
                mapAsAString.append(map[x][y]);
-               mapAsAString.append(" | ");
+               mapAsAString.append("|");
 
            }
            mapAsAString.append("\n");
+
        }
        return mapAsAString.toString();
 
