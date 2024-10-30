@@ -43,15 +43,30 @@ public class Inventory {
     }
     public void removeItem(String item)
     {
-        int indexOfItem = hasItem(item);
-        inventory[indexOfItem] = null;
-        numOfItems--;
-
+        if(numOfItems >0) {
+            int indexOfItem = hasItem(item);
+            inventory[indexOfItem] = null;
+            numOfItems--;
+        }
+        else
+        {
+            System.out.println("Inventory is empty you cant drop anything");
+        }
 
     }
     public String displayInventory()
     {
-        return inventory[0];
+        StringBuilder InventoryAsAString = new StringBuilder();
+        for(int i = 0 ; i < numOfItems ; i++)
+        {
+            if(inventory[i] != null)
+            {
+                InventoryAsAString.append(inventory[i]);
+                InventoryAsAString.append(" ");
+            }
+
+        }
+        return InventoryAsAString.toString();
     }
 
    
