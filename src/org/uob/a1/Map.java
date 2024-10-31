@@ -19,6 +19,7 @@ public class Map {
 
    public void placeRoom(Position pos, char symbol)
    {
+       map[pos.x][pos.y] = symbol;
    }
    public String display()
    {
