@@ -16,8 +16,34 @@ public class Game {
     }
     public static void getUserDirection(Position userPosition)
     {
-        char direction = reader.next().charAt(0);
+        char direction ;
+        boolean validUserInput = false;
+        String directionAsAString = "";
+
+        do {
+            try {
+                 directionAsAString = reader.nextLine();
+                 if(directionAsAString == null)
+                 {
+                     System.out.println("Please enter something");
+                     continue;
+                 }
+
+                if (directionAsAString.length() > 1) {
+                    System.out.println("Please enter a single character W/A/S/D :");
+                }
+                else
+                {
+                    validUserInput = true;
+                }
+
+            } catch (Exception e) {
+                System.out.println("Please enter a valid direction :");
+            }
+        }while (validUserInput == false);
+        direction = directionAsAString.charAt(0);
         direction = Character.toUpperCase(direction); // makes the user input non case sensitive
+
 
 
         switch (direction)
