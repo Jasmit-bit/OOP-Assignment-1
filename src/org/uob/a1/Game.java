@@ -22,6 +22,7 @@ public class Game {
 
         do {
             try {
+                System.out.print("Enter the direction: ");
                  directionAsAString = reader.nextLine();
                  if(directionAsAString == null)
                  {
@@ -41,42 +42,99 @@ public class Game {
                 System.out.println("Please enter a valid direction :");
             }
         }while (validUserInput == false);
+
         direction = directionAsAString.charAt(0);
         direction = Character.toUpperCase(direction); // makes the user input non case sensitive
 
+        boolean valid = false;
 
 
-        switch (direction)
-        {
-            case 'W':
-                diagram.placeRoom(userPosition,'.'); //removes the users old position
-                userPosition.y = userPosition.y - 1; // you start from the bottom so you have to reduce the y value
-                UpdateMapWithUserPosition(userPosition);
-                break;
+            switch (direction) {
 
-            case 'S':
-                diagram.placeRoom(userPosition,'.'); //removes the users old position
-                userPosition.y = userPosition.y + 1;
-                UpdateMapWithUserPosition(userPosition);
-                break;
+                case 'W':
+                    valid = checkIfNewPositionInMap(userPosition.x, userPosition.y-1);
+                    if(valid) {
+                        diagram.placeRoom(userPosition, '.'); //removes the users old position
+                        userPosition.y = userPosition.y - 1; // you start from the bottom so you have to reduce the y value
+                        UpdateMapWithUserPosition(userPosition);
+                    }
+                    else
+                    {
+                        System.out.println("You are out of bounds");
+                        getUserDirection(userPosition);
+                    }
 
-            case 'A':
-                diagram.placeRoom(userPosition,'.'); //removes the users old position
-                userPosition.x = userPosition.x - 1;
-                UpdateMapWithUserPosition(userPosition);
-                break;
-            case 'D':
-                diagram.placeRoom(userPosition,'.'); //removes the users old position
-                userPosition.x = userPosition.x + 1;
-                UpdateMapWithUserPosition(userPosition);
-                break;
+                    break;
+
+                case 'S':
+                    valid = checkIfNewPositionInMap(userPosition.x, userPosition.y+1);
+                    if(valid) {
+                        diagram.placeRoom(userPosition, '.'); //removes the users old position
+                        userPosition.y = userPosition.y + 1;
+                        UpdateMapWithUserPosition(userPosition);
+                    }
+                    else
+                    {
+                        System.out.println("You are out of bounds");
+                        getUserDirection(userPosition);
+                    }
+
+                    break;
+
+                case 'A':
+                    valid = checkIfNewPositionInMap(userPosition.x-1, userPosition.y);
+                    if(valid) {
+                        diagram.placeRoom(userPosition, '.'); //removes the users old position
+                        userPosition.x = userPosition.x - 1;
+                        UpdateMapWithUserPosition(userPosition);
+                    }
+                    else
+                    {
+                        System.out.println("You are out of bounds");
+                        getUserDirection(userPosition);
+                    }
+
+                    break;
+                case 'D':
+                    valid = checkIfNewPositionInMap(userPosition.x+1, userPosition.y);
+                    if(valid) {
+                        diagram.placeRoom(userPosition, '.'); //removes the users old position
+                        userPosition.x = userPosition.x + 1;
+                        UpdateMapWithUserPosition(userPosition);
+                    }
+                    else {
+                        System.out.println("You are out of bounds");
+                        getUserDirection(userPosition);
+                    }
+
+                    break;
+            }
 
 
         }
 
+        public static boolean checkIfNewPositionInMap(int x, int y)
+        {
+            boolean validUserInput = false;
+
+            if(x>=0 && y>= 0 && x< diagram.GetWidth() && y< diagram.GetHeight())
+            {
+                validUserInput = true;
+            }
+            else {
+                validUserInput = false;
+            }
 
 
-    }
+            return validUserInput;
+        }
+
+
+
+
+
+
+
 
     public static void main(String[] args) {
          // Now that I have a map which is 10x6 I should create the rooms

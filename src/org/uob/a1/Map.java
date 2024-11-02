@@ -16,6 +16,12 @@ public class Map {
        }
 
    }
+   public int GetWidth() {
+       return width;
+   }
+   public int GetHeight() {
+       return height;
+   }
 
    public void placeRoom(Position pos, char symbol)
    {
