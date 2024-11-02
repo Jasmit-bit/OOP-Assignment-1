@@ -10,7 +10,106 @@ public class Game {
     public static Room[] rooms = new Room[10];
     public static Room currentRoom = null;
     public static boolean currentlyInRoom = false;
+    public static Inventory inventory = new Inventory();
 
+
+
+    public static void createRooms()
+    {
+        {
+            //first I will create all the rooms
+            Position PosOfMainLobby = new Position(8, 1);
+            Room mainLobby = new Room("Main Lobby", "Hmm this room seems to have loads of sofas does the Joker actually have this many friends to be using all these sofas",
+                    'M', PosOfMainLobby);
+            diagram.placeRoom(PosOfMainLobby, mainLobby.getSymbol());
+            rooms[0]= mainLobby;
+
+            Position PosOfGarage = new Position(3, 4);
+            Room garage = new Room("Garage", "Wow the Joker has a garage with a very nice collection, wait is that the batmobile" +
+                    " Batman has to be somewhere around here", 'G', PosOfGarage);
+            diagram.placeRoom(PosOfGarage, garage.getSymbol());
+            {
+                garage.artForTheRoom = "                     @\n" +
+                        "               (__)    (__) _____/\n" +
+                        "            /| (oo) _  (oo)/----/_____    *\n" +
+                        "  _o\\______/_|\\_\\/_/_|__\\/|____|//////== *- *  * -\n" +
+                        " /_________   \\   00 |   00 |       /== -* * -\n" +
+                        "[_____/^^\\_____\\_____|_____/^^\\_____]     *- * -\n" +
+                        "      \\__/                 \\__/";
+            }
+            rooms[1]= garage;
+
+            Position PosOfKitchen = new Position(8, 5);
+            Room kitchen = new Room("Kitchen", "Gawd Damn the Joker has some expensive taste in counter tops," +
+                    "the kitchen has a fancy wood decor and loads of appliances", 'K', PosOfKitchen);
+            diagram.placeRoom(PosOfKitchen, kitchen.getSymbol());
+            rooms[2]= kitchen;
+
+            Position PosOfDrinksBar = new Position(9, 7);
+            Room drinksBar = new Room("Drinks Bar", " Looks like the Joker is quite the alcohol enjoyer he has a drinks bar in his basement " +
+                    " there seems to be Henessy and grey goose bottles in the windows just like those in the student flats", 'D', PosOfDrinksBar);
+            diagram.placeRoom(PosOfDrinksBar, drinksBar.getSymbol());
+            rooms[3]= drinksBar;
+
+            Position PosOfConservatory = new Position(5, 3);
+            Room conservatory = new Room("Conservatory", "This is a room meant to be enjoyed with the sun by the looks of it, its covered in glass shame that his lair is underground",
+                    'C', PosOfConservatory);
+            diagram.placeRoom(PosOfConservatory, conservatory.getSymbol());
+            rooms[4]= conservatory;
+
+            Position PosOfPantry = new Position(6, 4);
+            Room pantry = new Room("Pantry", "This is the pantry, the Joker seems to have a lot of china plates around here ", 'P', PosOfPantry);
+            diagram.placeRoom(PosOfPantry, pantry.getSymbol());
+            rooms[5]= pantry;
+
+
+            Position PosOfToilet = new Position(7, 2);
+            Room toilet = new Room("Toilet", "Welcome to the Joker's toilet, Its a very bright room with a big shower and blue lights everywhere ",
+                    'T', PosOfToilet);
+            diagram.placeRoom(PosOfToilet, toilet.getSymbol());
+            rooms[6] = toilet;
+
+            Position PosOfBedroom = new Position(6, 9);
+            Room bedroom = new Room("Bedroom", "Welcome the Joker's bedroom. And yes it is as miserable as you may think its all grey with smiles on the walls",
+                    'B', PosOfBedroom);
+            diagram.placeRoom(PosOfBedroom, bedroom.getSymbol());
+            rooms[7] = bedroom;
+
+            Position PosOfGarden = new Position(7, 8);
+            Room Garden = new Room("Garden", "Take a deep breath you are out of the Joker's cave from here you can see his garden furniture", 'O', PosOfGarden);
+            diagram.placeRoom(PosOfGarden, Garden.getSymbol());
+            rooms[8] = Garden;
+
+            Position PosOfTerrace = new Position(9, 6);
+            Room Terrace = new Room("Terrace", " You have managed to make it to the terrace of the house in the cave here you can see faint lights in the distance and a fancy helicopter", 'T', PosOfTerrace);
+            diagram.placeRoom(PosOfTerrace, Terrace.getSymbol());
+            rooms[9] = Terrace;
+        }
+
+    }
+//    public static void createItems()
+//    {
+//        String Hammer = "Hammer";
+//        inventory.addItem(Hammer);
+//
+//        String DeckOfCards = "Deck of Cards";
+//        inventory.addItem(DeckOfCards);
+//
+//        String Plunger = "Plunger";
+//        inventory.addItem(Plunger);
+//
+//        String Knife = "Knife";
+//        inventory.addItem(Knife);
+//
+//        String Football = "Football";
+//        inventory.addItem(Football);
+//
+//        String BatShurkiken = "Bat Shurkiken";
+//        inventory.addItem(BatShurkiken);
+//
+//
+//
+//    }
 
     public static void UpdateMapWithUserPosition(Position pos) {
         diagram.placeRoom(pos,'X');
@@ -42,7 +141,9 @@ public class Game {
         }
 
 
+
     }
+
     public static Room getRoom(int x, int y)
     {
         Room roomToReturn = null;
@@ -55,6 +156,8 @@ public class Game {
         }
         return roomToReturn;
     }
+
+
 
 
 
@@ -196,75 +299,9 @@ public class Game {
 
     public static void main(String[] args) {
         //creates the rooms and adds them to the array so all the Game class can see it
-        {
-            //first I will create all the rooms
-            Position PosOfMainLobby = new Position(8, 1);
-            Room mainLobby = new Room("Main Lobby", "Hmm this room seems to have loads of sofas does the Joker actually have this many friends to be using all these sofas",
-                    'M', PosOfMainLobby);
-            diagram.placeRoom(PosOfMainLobby, mainLobby.getSymbol());
-            rooms[0]= mainLobby;
-
-            Position PosOfGarage = new Position(3, 4);
-            Room garage = new Room("Garage", "Wow the Joker has a garage with a very nice collection, wait is that the batmobile" +
-                    " Batman has to be somewhere around here", 'G', PosOfGarage);
-            diagram.placeRoom(PosOfGarage, garage.getSymbol());
-            {
-                garage.artForTheRoom = "                     @\n" +
-                        "               (__)    (__) _____/\n" +
-                        "            /| (oo) _  (oo)/----/_____    *\n" +
-                        "  _o\\______/_|\\_\\/_/_|__\\/|____|//////== *- *  * -\n" +
-                        " /_________   \\   00 |   00 |       /== -* * -\n" +
-                        "[_____/^^\\_____\\_____|_____/^^\\_____]     *- * -\n" +
-                        "      \\__/                 \\__/";
-            }
-            rooms[1]= garage;
-
-            Position PosOfKitchen = new Position(8, 5);
-            Room kitchen = new Room("Kitchen", "Gawd Damn the Joker has some expensive taste in counter tops," +
-                    "the kitchen has a fancy wood decor and loads of appliances", 'K', PosOfKitchen);
-            diagram.placeRoom(PosOfKitchen, kitchen.getSymbol());
-            rooms[2]= kitchen;
-
-            Position PosOfDrinksBar = new Position(9, 7);
-            Room drinksBar = new Room("Drinks Bar", " Looks like the Joker is quite the alcohol enjoyer he has a drinks bar in his basement " +
-                    " there seems to be Henessy and grey goose bottles in the windows just like those in the student flats", 'D', PosOfDrinksBar);
-            diagram.placeRoom(PosOfDrinksBar, drinksBar.getSymbol());
-            rooms[3]= drinksBar;
-
-            Position PosOfConservatory = new Position(5, 3);
-            Room conservatory = new Room("Conservatory", "This is a room meant to be enjoyed with the sun by the looks of it, its covered in glass shame that his lair is underground",
-                    'C', PosOfConservatory);
-            diagram.placeRoom(PosOfConservatory, conservatory.getSymbol());
-            rooms[4]= conservatory;
-
-            Position PosOfPantry = new Position(6, 4);
-            Room pantry = new Room("Pantry", "This is the pantry, the Joker seems to have a lot of china plates around here ", 'P', PosOfPantry);
-            diagram.placeRoom(PosOfPantry, pantry.getSymbol());
-            rooms[5]= pantry;
+        createRooms();
 
 
-            Position PosOfToilet = new Position(7, 2);
-            Room toilet = new Room("Toilet", "Welcome to the Joker's toilet, Its a very bright room with a big shower and blue lights everywhere ",
-                    'T', PosOfToilet);
-            diagram.placeRoom(PosOfToilet, toilet.getSymbol());
-            rooms[6] = toilet;
-
-            Position PosOfBedroom = new Position(6, 9);
-            Room bedroom = new Room("Bedroom", "Welcome the Joker's bedroom. And yes it is as miserable as you may think its all grey with smiles on the walls",
-                    'B', PosOfBedroom);
-            diagram.placeRoom(PosOfBedroom, bedroom.getSymbol());
-            rooms[7] = bedroom;
-
-            Position PosOfGarden = new Position(7, 8);
-            Room Garden = new Room("Garden", "Take a deep breath you are out of the Joker's cave from here you can see his garden furniture", 'O', PosOfGarden);
-            diagram.placeRoom(PosOfGarden, Garden.getSymbol());
-            rooms[8] = Garden;
-
-            Position PosOfTerrace = new Position(9, 6);
-            Room Terrace = new Room("Terrace", " You have managed to make it to the terrace of the house in the cave here you can see faint lights in the distance and a fancy helicopter", 'T', PosOfTerrace);
-            diagram.placeRoom(PosOfTerrace, Terrace.getSymbol());
-            rooms[9] = Terrace;
-        }
         Score score = new Score(0);
         Position userPosition = new Position(0,9);
         diagram.placeRoom(userPosition,'X');
