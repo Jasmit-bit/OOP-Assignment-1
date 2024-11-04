@@ -111,7 +111,11 @@ public class Game{
                 "• \"score\" - Displays the user’s current score.\n" +
                 "• \"map\" - Displays a text-based map of the current explored game world.\n" +
                 "• \"help\" - Displays a help message.\n" +
-                "• \"quit\" - Quits the game.");
+                "• \"quit\" - Quits the game. \n " +
+                "• \"clear\" - clears the terminal.\n"
+
+
+        );
 
     }
     public static boolean checkIfNewPositionInMap(int x, int y)
@@ -147,6 +151,7 @@ public class Game{
     }
 
 
+    // responsible for the user's movement between rooms and the map
     public static void getUserDirection(Position userPosition , String userMove)
     {
 
@@ -183,6 +188,8 @@ public class Game{
                     currentRoom = getRoom(userPosition.x, userPosition.y);
                     System.out.println("You are now entering the " + currentRoom.getName());
                     currentlyInRoom = true;
+                    CheckIfRoomHasPuzzle(currentRoom);
+
 
                 }
                 break;
@@ -214,6 +221,7 @@ public class Game{
                     currentRoom = getRoom(userPosition.x, userPosition.y);
                     currentlyInRoom = true;
                     System.out.println("You are now entering the " + currentRoom.getName());
+                    CheckIfRoomHasPuzzle(currentRoom);
 
                 }
 
@@ -245,6 +253,7 @@ public class Game{
                     currentRoom = getRoom(userPosition.x, userPosition.y);
                     currentlyInRoom = true;
                     System.out.println("You are now entering the " + currentRoom.getName());
+                    CheckIfRoomHasPuzzle(currentRoom);
 
                 }
 
@@ -274,6 +283,7 @@ public class Game{
                     currentRoom = getRoom(userPosition.x, userPosition.y);
                     currentlyInRoom = true;
                     System.out.println("You are now entering the " + currentRoom.getName());
+                    CheckIfRoomHasPuzzle(currentRoom);
 
                 }
                 break;
@@ -288,6 +298,7 @@ public class Game{
         System.out.println("Please enter a command");
         System.out.print(">> ");
         String userMove = scanner.nextLine();
+        userMove = userMove.toLowerCase();
 
         if(userMove.equals("move north") || userMove.equals("move south")||userMove.equals("move west") || userMove.equals("move east"))
         {
@@ -326,6 +337,10 @@ public class Game{
                 System.out.println("Your current location is marked with an X");
             }
         }
+        else if(userMove.equals("clear"))
+        {
+            clearScreen();
+        }
         else
         {
             System.out.println("That move was not recognised please enter a valid command") ;
@@ -333,6 +348,25 @@ public class Game{
         }
 
     }
+
+    public static void CheckIfRoomHasPuzzle(Room newRoom)
+    {
+        String roomName = newRoom.getName();
+        if(roomName.equals("Toilet"))
+        {
+            enterToiletPuzzle();
+        }
+    }
+
+    public static void clearScreen()
+    {
+        for(int i =0 ; i<30 ; i++)
+        {
+            System.out.println();
+        }
+    }
+
+
 
     //Puzzle 1 to enter the toilet you need to flip the light switch on
     public static void enterToiletPuzzle()
@@ -407,7 +441,7 @@ public class Game{
 
     public static void main(String[] args)
     {
-        enterToiletPuzzle();
+
 
         String welcome = "Welcome player, in this game you are a detective which has been tasked with finding batman as he has gone missing";
         int timeToWait = 5;
