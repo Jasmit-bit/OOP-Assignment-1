@@ -1,18 +1,30 @@
 package org.uob.a1;
 
-import java.util.Scanner; 
+import java.util.Scanner;
 
-public class Game {
-
-    public static Scanner reader = new Scanner(System.in);
-    public static Position userPosition = new Position(1,1);
-    public static Map diagram = new Map(10,10);
+public class Game{
     public static Room[] rooms = new Room[10];
-    public static Room currentRoom = null;
-    public static boolean currentlyInRoom = false;
+    public static Map diagram = new Map(10,10);
+    public static Room currentRoom;
+    public static Position UserPosition = new Position(8,1);
     public static Inventory inventory = new Inventory();
+    public static Scanner scanner = new Scanner(System.in);
+    public static Score score = new Score(0);
+    public static boolean currentlyInRoom ;
 
 
+    public static Room getRoom(int x, int y)
+    {
+        Room roomToReturn = null;
+        for(int i = 0 ; i<rooms.length ; i++)
+        {
+            if(rooms[i].getPosition().x == x && rooms[i].getPosition().y == y)
+            {
+                return rooms[i];
+            }
+        }
+        return roomToReturn;
+    }
 
     public static void createRooms()
     {
@@ -87,203 +99,36 @@ public class Game {
         }
 
     }
-//    public static void createItems()
-//    {
-//        String Hammer = "Hammer";
-//        inventory.addItem(Hammer);
-//
-//        String DeckOfCards = "Deck of Cards";
-//        inventory.addItem(DeckOfCards);
-//
-//        String Plunger = "Plunger";
-//        inventory.addItem(Plunger);
-//
-//        String Knife = "Knife";
-//        inventory.addItem(Knife);
-//
-//        String Football = "Football";
-//        inventory.addItem(Football);
-//
-//        String BatShurkiken = "Bat Shurkiken";
-//        inventory.addItem(BatShurkiken);
-//
-//
-//
-//    }
 
-    public static void UpdateMapWithUserPosition(Position pos) {
-        diagram.placeRoom(pos,'X');
-        System.out.println(diagram.display());
-
+    public static void helpScreen()
+    {
+        System.out.println("\"move <direction>\" - (<direction> can be \"north\", \"south\", \"east\", \"west\"). The\n" +
+                "player moves to a new room based on the direction.\n" +
+                "• \"look\" - Displays a description of the room the player is in.\n" +
+                "• \"look <feature>\" - Displays a more detailed description of a feature of a room.\n" +
+                "• \"look <item>\" - Displays a description of an item.\n" +
+                "• \"inventory\" - Displays a list of all items the player has obtained.\n" +
+                "• \"score\" - Displays the user’s current score.\n" +
+                "• \"map\" - Displays a text-based map of the current explored game world.\n" +
+                "• \"help\" - Displays a help message.\n" +
+                "• \"quit\" - Quits the game.");
 
     }
-
-    public static void clearScreen()
-    {
-        for(int i = 0; i< 30 ; i++)
-        {
-            System.out.println(" ");
-        }
-    }
-
-    public static void enterRoom(int x, int y)
-    {
-        currentlyInRoom = true;
-        clearScreen();
-        currentRoom = getRoom(x,y);
-        System.out.println(currentRoom.artForTheRoom);
-        System.out.println("You have entered the " + currentRoom.getName());
-        System.out.println("please type look to have a look around the room");
-        String userMove = reader.nextLine();
-        if(userMove.equals("look"))
-        {
-            System.out.println(currentRoom.getDescription());
-        }
-
-
-
-    }
-
-    public static Room getRoom(int x, int y)
-    {
-        Room roomToReturn = null;
-        for(int i = 0 ; i<rooms.length ; i++)
-        {
-            if(rooms[i].getPosition().x == x && rooms[i].getPosition().y == y)
-            {
-                return rooms[i];
-            }
-        }
-        return roomToReturn;
-    }
-
-
-
-
-
-    // gets the users direction (WASD)
-    public static void getUserDirection(Position userPosition)
-    {
-        char direction ;
-        boolean validUserInput = false;
-        String directionAsAString = "";
-
-        do {
-            try {
-                System.out.print("Enter the direction: ");
-                 directionAsAString = reader.nextLine();
-                 if(directionAsAString == null)
-                 {
-                     System.out.println("Please enter something");
-                     continue;
-                 }
-
-                if (directionAsAString.length() > 1) {
-                    System.out.println("Please enter a single character W/A/S/D :");
-                }
-                else
-                {
-                    validUserInput = true;
-                }
-
-            } catch (Exception e) {
-                System.out.println("Please enter a valid direction :");
-            }
-        }while (validUserInput == false);
-
-        direction = directionAsAString.charAt(0);
-        direction = Character.toUpperCase(direction); // makes the user input non case sensitive
-
-        boolean valid = false;
-        boolean thereIsRoom = false;
-
-
-            switch (direction) {
-
-                case 'W':
-                    valid = checkIfNewPositionInMap(userPosition.x, userPosition.y-1);
-                    thereIsRoom =checkIfThereIsARoom(userPosition.x, userPosition.y-1);
-
-                    if(valid && thereIsRoom == false) {
-                        diagram.placeRoom(userPosition, '.'); //removes the users old position
-                        userPosition.y = userPosition.y - 1; // you start from the bottom so you have to reduce the y value
-                        UpdateMapWithUserPosition(userPosition);
-                    }
-                    else if(thereIsRoom) {
-                        enterRoom(userPosition.x, userPosition.y-1);
-
-                    }
-                    else
-                    {
-                        System.out.println("You are out of bounds");
-                        getUserDirection(userPosition);
-                    }
-
-                    break;
-
-                case 'S':
-                    valid = checkIfNewPositionInMap(userPosition.x, userPosition.y+1);
-                    if(valid) {
-                        diagram.placeRoom(userPosition, '.'); //removes the users old position
-                        userPosition.y = userPosition.y + 1;
-                        UpdateMapWithUserPosition(userPosition);
-                    }
-                    else
-                    {
-                        System.out.println("You are out of bounds");
-                        getUserDirection(userPosition);
-                    }
-
-                    break;
-
-                case 'A':
-                    valid = checkIfNewPositionInMap(userPosition.x-1, userPosition.y);
-                    if(valid) {
-                        diagram.placeRoom(userPosition, '.'); //removes the users old position
-                        userPosition.x = userPosition.x - 1;
-                        UpdateMapWithUserPosition(userPosition);
-                    }
-                    else
-                    {
-                        System.out.println("You are out of bounds");
-                        getUserDirection(userPosition);
-                    }
-
-                    break;
-                case 'D':
-                    valid = checkIfNewPositionInMap(userPosition.x+1, userPosition.y);
-                    if(valid) {
-                        diagram.placeRoom(userPosition, '.'); //removes the users old position
-                        userPosition.x = userPosition.x + 1;
-                        UpdateMapWithUserPosition(userPosition);
-                    }
-                    else {
-                        System.out.println("You are out of bounds");
-                        getUserDirection(userPosition);
-                    }
-
-                    break;
-            }
-
-
-        }
-
     public static boolean checkIfNewPositionInMap(int x, int y)
     {
-            boolean validUserInput = false;
+        boolean validUserInput = false;
 
-            if((x >= 0) && (y >= 0) && (x < diagram.GetWidth()) && (y < diagram.GetHeight())) // there is a "quicker" way of returning this ,but I am doing this for better readability of code
-            {
-                validUserInput = true;
-            }
-            else {
-                validUserInput = false;
-            }
-
-
-            return validUserInput;
+        if((x >= 0) && (y >= 0) && (x < diagram.GetWidth()) && (y < diagram.GetHeight())) // there is a "quicker" way of returning this ,but I am doing this for better readability of code
+        {
+            validUserInput = true;
+        }
+        else {
+            validUserInput = false;
         }
 
+
+        return validUserInput;
+    }
     public static boolean checkIfThereIsARoom(int x, int y)
     {
 
@@ -297,17 +142,298 @@ public class Game {
         return false;
     }
 
-    public static void main(String[] args) {
-        //creates the rooms and adds them to the array so all the Game class can see it
+    public static void UpdateMapWithUserPosition(Position pos) {
+        diagram.placeRoom(pos,'X');
+    }
+
+
+    public static void getUserDirection(Position userPosition , String userMove)
+    {
+
+        boolean valid ;
+        boolean thereIsRoom;
+
+        switch (userMove) {
+
+            case  "move north":
+                valid = checkIfNewPositionInMap(userPosition.x, userPosition.y-1);
+                thereIsRoom =checkIfThereIsARoom(userPosition.x, userPosition.y-1);
+
+                if(!valid)
+                {
+                    System.out.println("That location is not on the map please select a different move");
+                    checkUserMove();
+                }
+
+                if(valid && thereIsRoom == false) {
+                    if(currentlyInRoom == false)// this makes it so that you dont overwrite the rooms once you leave them
+                    {
+                        diagram.placeRoom(userPosition, '.'); //removes the users old position
+                    }
+                    userPosition.y = userPosition.y - 1; // you start from the bottom so you have to reduce the y value
+                    UpdateMapWithUserPosition(userPosition);
+                    currentlyInRoom= false;
+                    System.out.println("Your new location doesn't have a room you are somewhere in the jokers hallway enter 'map' to view the map");
+                }
+
+                if(valid && thereIsRoom)
+                {
+                    diagram.placeRoom(userPosition, '.');
+                    userPosition.y = userPosition.y - 1;
+                    currentRoom = getRoom(userPosition.x, userPosition.y);
+                    System.out.println("You are now entering the " + currentRoom.getName());
+                    currentlyInRoom = true;
+
+                }
+                break;
+
+            case "move south":
+                valid = checkIfNewPositionInMap(userPosition.x, userPosition.y+1);
+                thereIsRoom =checkIfThereIsARoom(userPosition.x, userPosition.y+1);
+                if(!valid)
+                {
+                    System.out.println("That location is not on the map please select a different move");
+                    checkUserMove();
+                }
+
+                if(valid && thereIsRoom == false) {
+                    if(currentlyInRoom == false)// this makes it so that you dont overwrite the rooms once you leave them
+                    {
+                        diagram.placeRoom(userPosition, '.'); //removes the users old position
+                    }
+
+                    userPosition.y = userPosition.y + 1; // you start from the bottom so you have to reduce the y value
+                    UpdateMapWithUserPosition(userPosition);
+                    currentlyInRoom= false;
+                    System.out.println("Your new location doesn't have a room you are somewhere in the jokers hallway enter 'map' to view the map");
+                }
+                if(valid && thereIsRoom)
+                {
+                    diagram.placeRoom(userPosition, '.');
+                    userPosition.y = userPosition.y + 1;
+                    currentRoom = getRoom(userPosition.x, userPosition.y);
+                    currentlyInRoom = true;
+                    System.out.println("You are now entering the " + currentRoom.getName());
+
+                }
+
+                break;
+
+            case "move west":
+                valid = checkIfNewPositionInMap(userPosition.x-1, userPosition.y);
+                thereIsRoom = checkIfThereIsARoom(userPosition.x-1, userPosition.y );
+                if(!valid)
+                {
+                    System.out.println("That location is not on the map please select a different move");
+                    checkUserMove();
+                }
+                if(valid && thereIsRoom == false) {
+                    if(currentlyInRoom == false)// this makes it so that you dont overwrite the rooms once you leave them
+                    {
+                        diagram.placeRoom(userPosition, '.'); //removes the users old position
+                    }
+
+                    userPosition.x = userPosition.x - 1; // you start from the bottom so you have to reduce the y value
+                    UpdateMapWithUserPosition(userPosition);
+                    currentlyInRoom= false;
+                    System.out.println("Your new location doesn't have a room you are somewhere in the jokers hallway enter 'map' to view the map");
+                }
+                if(valid && thereIsRoom)
+                {
+                    diagram.placeRoom(userPosition, '.');
+                    userPosition.x = userPosition.x - 1;
+                    currentRoom = getRoom(userPosition.x, userPosition.y);
+                    currentlyInRoom = true;
+                    System.out.println("You are now entering the " + currentRoom.getName());
+
+                }
+
+                break;
+            case "move east":
+                valid = checkIfNewPositionInMap(userPosition.x+1, userPosition.y);
+                thereIsRoom = checkIfThereIsARoom(userPosition.x+1, userPosition.y );
+
+                if(!valid)
+                {
+                    System.out.println("That location is not on the map please select a different move");
+                    checkUserMove();
+                }
+                if(valid && thereIsRoom == false) {
+                    if (currentlyInRoom == false) {
+                        diagram.placeRoom(userPosition, '.'); //removes the users old position
+                    }
+                    userPosition.x = userPosition.x + 1; // you start from the bottom so you have to reduce the y value
+                    UpdateMapWithUserPosition(userPosition);
+                    currentlyInRoom= false;
+                    System.out.println("Your new location doesn't have a room you are somewhere in the jokers hallway enter 'map' to view the map");
+                }
+                if(valid && thereIsRoom)
+                {
+                    diagram.placeRoom(userPosition, '.');
+                    userPosition.x = userPosition.x + 1;
+                    currentRoom = getRoom(userPosition.x, userPosition.y);
+                    currentlyInRoom = true;
+                    System.out.println("You are now entering the " + currentRoom.getName());
+
+                }
+                break;
+        }
+
+
+    }
+
+    // this is the method that deals with user inputs, so all the commands and their relating if statements are here
+    public static void checkUserMove()
+    {
+        System.out.println("Please enter a command");
+        System.out.print(">> ");
+        String userMove = scanner.nextLine();
+
+        if(userMove.equals("move north") || userMove.equals("move south")||userMove.equals("move west") || userMove.equals("move east"))
+        {
+            getUserDirection(UserPosition,userMove);
+
+        }
+        else if(userMove.equals("help"))
+        {
+            helpScreen();
+        }
+        else if(userMove.equals("quit"))
+        {
+            System.exit(0);
+        }
+        else if(userMove.equals("look"))
+        {
+            System.out.println(currentRoom.getDescription());
+        }
+        else if(userMove.equals("inventory"))
+        {
+            System.out.println(inventory.displayInventory());
+        }
+        else if(userMove.equals("score"))
+        {
+            System.out.println(score.getScore());
+        }
+        else if(userMove.equals("map"))
+        {
+            if(currentlyInRoom) {
+                System.out.println(diagram.display());
+                System.out.println("You are currently in the " + currentRoom.getName() + " which is marked on the map as " + currentRoom.getSymbol());
+            }
+            else
+            {
+                System.out.println(diagram.display());
+                System.out.println("Your current location is marked with an X");
+            }
+        }
+        else
+        {
+            System.out.println("That move was not recognised please enter a valid command") ;
+            checkUserMove();
+        }
+
+    }
+
+    //Puzzle 1 to enter the toilet you need to flip the light switch on
+    public static void enterToiletPuzzle()
+    {
+
+        System.out.println("The lights in the toilet don't seem to be on you can't leave or move from this room because you can see anything");
+        System.out.println(">> A ray of light shines to your left and it reveals 3 switches - maybe these turn the lights on ");
+
+        boolean switchOneTurnedOn = false;
+        boolean switchTwoTurnedOn = false;
+
+        boolean lightTurnedOn = false;
+
+        while(lightTurnedOn == false)
+        {
+            System.out.println("Please enter a switch number (1-3)");
+            String switchNumber = scanner.nextLine();
+            //switch 3 will turn the lights on
+            switch(switchNumber)
+            {
+                case "1":
+                    if(switchOneTurnedOn)
+                    {
+                        System.out.println("The switch is already turned on! ");
+
+                    }
+                    else {
+                        System.out.println(">> You flipped switch 1 on");
+                        System.out.println(">> Unfortunately the lights didn't come on, but the boiler did turn on,  try a different switch");
+                        switchOneTurnedOn = true;
+                    }
+                    break;
+                case  "2":
+                    if(switchTwoTurnedOn){
+                        System.out.println("The switch is already turned on! ");
+                    }
+                    else{
+                        System.out.println(">> You flipped switch 2 on");
+                        System.out.println(">> Unfortunately the lights didn't come on, but the speakers did turn on they are playing clown music,  try a different switch");
+                        switchTwoTurnedOn = true;
+                    }
+                    break;
+                case  "3":
+                    System.out.println(">> You flipped switch 3 on");
+                    lightTurnedOn = true;
+                    System.out.println("  ..---..\n" +
+                            " /       \\\n" +
+                            "|         |\n" +
+                            ":         ;\n" +
+                            " \\  \\~/  /\n" +
+                            "  `, Y ,'\n" +
+                            "   |_|_|\n" +
+                            "   |===|\n" +
+                            "   |===|\n" +
+                            "    \\_/");
+
+                    System.out.println(">> The lights turned on Congratulations!");
+                    break;
+                default:
+                    System.out.println("That switch number does not exist");
+                    break;
+
+
+            }
+        }
+
+
+
+    }
+
+
+
+    public static void main(String[] args)
+    {
+        enterToiletPuzzle();
+
+        String welcome = "Welcome player, in this game you are a detective which has been tasked with finding batman as he has gone missing";
+        int timeToWait = 5;
+        for(int i = 0; i< welcome.length();i++)
+        {
+            System.out.print(welcome.charAt(i));
+            try {
+                Thread.sleep(timeToWait);
+            }
+            catch(Exception ex)
+            {
+                System.out.println("Slow fade in failed");
+            }
+        }
         createRooms();
+        System.out.println();
+        currentRoom= getRoom(UserPosition.x, UserPosition.y);// the user starts off in the main lobby
+        currentlyInRoom = true;
+        System.out.println("You are currently in " + currentRoom.getName() + " There seems to be a note on the door please enter 'look note' if you would like to have a look at the note");
 
+        System.out.println();
 
-        Score score = new Score(0);
-        Position userPosition = new Position(0,9);
-        diagram.placeRoom(userPosition,'X');
-        System.out.println(diagram.display());
-        while(currentlyInRoom == false) {
-            getUserDirection(userPosition);
+        System.out.println("Please enter your command or enter help to learn more about commands in the game");
+
+        while(true) {
+            checkUserMove();
         }
 
 
@@ -322,14 +448,6 @@ public class Game {
 
 
 
-
-
-
-
-
-
-
-
     }
-    
+
 }

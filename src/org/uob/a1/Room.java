@@ -6,6 +6,12 @@ public class Room {
     private Position position;
     public String artForTheRoom = " ";
     public String RoomPuzzle = null;
+    public String roomItem = null;
+    public String roomItemDescription = null;
+    public String roomFeature = null;
+
+
+
 
     public Room(String name, String description, char symbol, Position position)
     {
