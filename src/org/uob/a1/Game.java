@@ -26,16 +26,16 @@ public class Game{
         return roomToReturn;
     }
 
-    // this function creates the rooms and adds the 'look' features foreach room
+    // this function creates the rooms and adds the 'look' features for each room
     public static void createRooms()
     {
         {
             //first I will create all the rooms
             Position PosOfMainLobby = new Position(8, 1);
-            Room mainLobby = new Room("Main Lobby", "Hmm this room seems to have loads of sofas does the Joker actually have this many friends to be using all these sofas, enter 'look sofa' for some more information",
+            Room mainLobby = new Room("Main Lobby", "Hmm this room seems to have loads of sofas does the Joker actually have this many friends to be using all these sofas",
                     'M', PosOfMainLobby);
-            mainLobby.roomFeature = "The sofas are a nice red velvet colour, in between them something shines... its Batman's mask!";
-            mainLobby.roomFeatureName = "look sofa";
+            mainLobby.roomFeature = "The note reads - 'Oh Robin! I knew you would come you are so predictable go free him if you can!'";
+            mainLobby.roomFeatureName = "look note";
             diagram.placeRoom(PosOfMainLobby, mainLobby.getSymbol());
             rooms[0]= mainLobby;
 
@@ -172,6 +172,127 @@ public class Game{
     public static void UpdateMapWithUserPosition(Position pos) {
         diagram.placeRoom(pos,'X');
     }
+    // additional subroutine that deals with the look user inputs so that the other procedure doesn't become blocked up
+    // Here I also make sure that the player is in the given room before letting them look at a specific place
+    public static void dealWithLook(String userWord)
+    {
+        if(userWord.equals("look"))
+        {
+            System.out.println(currentRoom.getDescription());
+        }
+        else if(userWord.equals("look note"))
+        {
+            if(currentRoom.getName().equals("Main Lobby"))
+            {
+                System.out.println(currentRoom.roomFeature);
+            }
+            else
+            {
+                System.out.println("That feature doesnt exist in this room!");
+            }
+        }
+        else if(userWord.equals("look batmobile"))
+        {
+            if(currentRoom.getName().equals("Garage"))
+            {
+                System.out.println(currentRoom.roomFeature);
+            }
+            else
+            {
+                System.out.println("That feature doesnt exist in this room!");
+            }
+        }
+        else if(userWord.equals("look counter "))
+        {
+            if(currentRoom.getName().equals("Kitchen"))
+            {
+                System.out.println(currentRoom.roomFeature);
+            }
+            else
+            {
+                System.out.println("That feature doesnt exist in this room!");
+            }
+        }
+        else if(userWord.equals("look window"))
+        {
+            if(currentRoom.getName().equals("Drinks Bar"))
+            {
+                System.out.println(currentRoom.roomFeature);
+            }
+            else
+            {
+                System.out.println("That feature doesnt exist in this room!");
+            }
+        }
+        else if(userWord.equals("look garden"))
+        {
+            if(currentRoom.getName().equals("Conservatory"))
+            {
+                System.out.println(currentRoom.roomFeature);
+            }
+            else
+            {
+                System.out.println("That feature doesnt exist in this room!");
+            }
+        }
+        else if(userWord.equals("look plates"))
+        {
+            if(currentRoom.getName().equals("Pantry"))
+            {
+                System.out.println(currentRoom.roomFeature);
+            }
+            else
+            {
+                System.out.println("That feature doesnt exist in this room!");
+            }
+        }
+        else if(userWord.equals("look wall"))
+        {
+            if(currentRoom.getName().equals("Toilet"))
+            {
+                System.out.println(currentRoom.roomFeature);
+            }
+            else
+            {
+                System.out.println("That feature doesnt exist in this room!");
+            }
+        }
+        else if(userWord.equals("look under-bed"))
+        {
+            if(currentRoom.getName().equals("Bedroom"))
+            {
+                System.out.println(currentRoom.roomFeature);
+            }
+            else
+            {
+                System.out.println("That feature doesnt exist in this room!");
+            }
+        }
+        else if(userWord.equals("look over-fence"))
+        {
+            if(currentRoom.getName().equals("Garden"))
+            {
+                System.out.println(currentRoom.roomFeature);
+            }
+            else
+            {
+                System.out.println("That feature doesnt exist in this room!");
+            }
+        }
+        else if(userWord.equals("look helicopter"))
+        {
+            if(currentRoom.getName().equals("Terrace"))
+            {
+                System.out.println(currentRoom.roomFeature);
+            }
+            else
+            {
+                System.out.println("That feature doesnt exist in this room!");
+            }
+        }
+
+    }
+
 
 
     // responsible for the user's movement between rooms and the map
@@ -210,6 +331,7 @@ public class Game{
                     userPosition.y = userPosition.y - 1;
                     currentRoom = getRoom(userPosition.x, userPosition.y);
                     System.out.println("You are now entering the " + currentRoom.getName());
+                    System.out.println("Enter '" +  currentRoom.roomFeatureName + "' for a more detailed description of this rooms feature");
                     currentlyInRoom = true;
                     CheckIfRoomHasPuzzle(currentRoom);
 
@@ -245,6 +367,8 @@ public class Game{
                     currentlyInRoom = true;
                     System.out.println("You are now entering the " + currentRoom.getName());
                     CheckIfRoomHasPuzzle(currentRoom);
+                    System.out.println("Enter '" +  currentRoom.roomFeatureName + "' for a more detailed description of this rooms feature");
+
 
                 }
 
@@ -277,6 +401,8 @@ public class Game{
                     currentlyInRoom = true;
                     System.out.println("You are now entering the " + currentRoom.getName());
                     CheckIfRoomHasPuzzle(currentRoom);
+                    System.out.println("Enter '" +  currentRoom.roomFeatureName + "' for a more detailed description of this rooms feature");
+
 
                 }
 
@@ -306,6 +432,8 @@ public class Game{
                     currentRoom = getRoom(userPosition.x, userPosition.y);
                     currentlyInRoom = true;
                     System.out.println("You are now entering the " + currentRoom.getName());
+                    System.out.println("Enter '" +  currentRoom.roomFeatureName + "' for a more detailed description of this rooms feature");
+
                     CheckIfRoomHasPuzzle(currentRoom);
 
                 }
@@ -318,10 +446,19 @@ public class Game{
     // this is the method that deals with user inputs, so all the commands and their relating if statements are here
     public static void checkUserMove()
     {
+
+
         System.out.println("Please enter a command");
         System.out.print(">> ");
         String userMove = scanner.nextLine();
         userMove = userMove.toLowerCase();
+
+        if(userMove.contains("look"))
+        {
+            dealWithLook(userMove);
+        }
+        else {
+
 
         if(userMove.equals("move north") || userMove.equals("move south")||userMove.equals("move west") || userMove.equals("move east"))
         {
@@ -335,10 +472,6 @@ public class Game{
         else if(userMove.equals("quit"))
         {
             System.exit(0);
-        }
-        else if(userMove.equals("look"))
-        {
-            System.out.println(currentRoom.getDescription());
         }
         else if(userMove.equals("inventory"))
         {
@@ -368,6 +501,7 @@ public class Game{
         {
             System.out.println("That move was not recognised please enter a valid command") ;
             checkUserMove();
+        }
         }
 
     }
@@ -507,27 +641,14 @@ public class Game{
     {
 
 
-        String welcome = "Welcome player, in this game you are a detective which has been tasked with finding batman as he has gone missing";
-        int timeToWait = 5;
-        for(int i = 0; i< welcome.length();i++)
-        {
-            System.out.print(welcome.charAt(i));
-            try {
-                Thread.sleep(timeToWait);
-            }
-            catch(Exception ex)
-            {
-                System.out.println("Slow fade in failed");
-            }
-        }
+        System.out.println("Welcome player, in this game you are a detective which has been tasked with finding batman as he has gone missing, probe the compound and find Batman");
+
         createRooms();
         System.out.println();
         currentRoom= getRoom(UserPosition.x, UserPosition.y);// the user starts off in the main lobby
         currentlyInRoom = true;
         System.out.println("You are currently in " + currentRoom.getName() + " There seems to be a note on the door please enter 'look note' if you would like to have a look at the note");
-
         System.out.println();
-
         System.out.println("Please enter your command or enter help to learn more about commands in the game");
 
         while(true) {
