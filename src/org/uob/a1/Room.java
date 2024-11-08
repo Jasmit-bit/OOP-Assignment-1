@@ -9,6 +9,7 @@ public class Room {
     public String roomItem = null;
     public String roomItemDescription = null;
     public String roomFeature = null;
+    public String roomFeatureName = null;
 
 
 

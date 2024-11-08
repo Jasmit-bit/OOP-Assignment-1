@@ -26,19 +26,24 @@ public class Game{
         return roomToReturn;
     }
 
+    // this function creates the rooms and adds the 'look' features foreach room
     public static void createRooms()
     {
         {
             //first I will create all the rooms
             Position PosOfMainLobby = new Position(8, 1);
-            Room mainLobby = new Room("Main Lobby", "Hmm this room seems to have loads of sofas does the Joker actually have this many friends to be using all these sofas",
+            Room mainLobby = new Room("Main Lobby", "Hmm this room seems to have loads of sofas does the Joker actually have this many friends to be using all these sofas, enter 'look sofa' for some more information",
                     'M', PosOfMainLobby);
+            mainLobby.roomFeature = "The sofas are a nice red velvet colour, in between them something shines... its Batman's mask!";
+            mainLobby.roomFeatureName = "look sofa";
             diagram.placeRoom(PosOfMainLobby, mainLobby.getSymbol());
             rooms[0]= mainLobby;
 
             Position PosOfGarage = new Position(3, 4);
             Room garage = new Room("Garage", "Wow the Joker has a garage with a very nice collection, wait is that the batmobile" +
-                    " Batman has to be somewhere around here", 'G', PosOfGarage);
+                    " Batman has to be somewhere around here, enter 'look batmobile' to have a closer look at the batmobile", 'G', PosOfGarage);
+            garage.roomFeature = "The light reflects off the pearly black paint of the car, but something white shines inside the car - a vintage Joker Card";
+            garage.roomFeatureName = "look batmobile";
             diagram.placeRoom(PosOfGarage, garage.getSymbol());
             {
                 garage.artForTheRoom = "                     @\n" +
@@ -53,24 +58,33 @@ public class Game{
 
             Position PosOfKitchen = new Position(8, 5);
             Room kitchen = new Room("Kitchen", "Gawd Damn the Joker has some expensive taste in counter tops," +
-                    "the kitchen has a fancy wood decor and loads of appliances", 'K', PosOfKitchen);
+                    "the kitchen has a fancy wood decor and loads of appliances, enter 'look counter' ", 'K', PosOfKitchen);
+            kitchen.roomFeature = "The counters have shreds of cheese all over them, the Joker must know Batman is allergic to cheese, he must be trying to hurt him";
             diagram.placeRoom(PosOfKitchen, kitchen.getSymbol());
+            kitchen.roomFeatureName = "look counter";
             rooms[2]= kitchen;
 
             Position PosOfDrinksBar = new Position(9, 7);
             Room drinksBar = new Room("Drinks Bar", " Looks like the Joker is quite the alcohol enjoyer he has a drinks bar in his basement " +
-                    " there seems to be Henessy and grey goose bottles in the windows just like those in the student flats", 'D', PosOfDrinksBar);
+                    " there seems to be Henessy and grey goose bottles in the windows just like those in the student flats enter 'look window' to have a look through the window", 'D', PosOfDrinksBar);
+            drinksBar.roomFeature= "The window's glass is kept clean and is very see through, from the corner of your eye you see a light shining from the bedroom it might be worth investigating the bedroom";
             diagram.placeRoom(PosOfDrinksBar, drinksBar.getSymbol());
+            drinksBar.roomFeatureName = "look window";
             rooms[3]= drinksBar;
 
             Position PosOfConservatory = new Position(5, 3);
-            Room conservatory = new Room("Conservatory", "This is a room meant to be enjoyed with the sun by the looks of it, its covered in glass shame that his lair is underground",
+            Room conservatory = new Room("Conservatory", "This is a room meant to be enjoyed with the sun by the looks of it, its covered in glass shame that his lair is underground enter 'look garden' to have a look at the garden through the window",
                     'C', PosOfConservatory);
-            diagram.placeRoom(PosOfConservatory, conservatory.getSymbol());
+
+            drinksBar.roomFeature = "looking through the window into the garden you see lots of trees, but how is that possible underground with minimal sunlight maybe the windows in this place are not actually real windows";
+            drinksBar.roomFeatureName = "look garden";
+                diagram.placeRoom(PosOfConservatory, conservatory.getSymbol());
             rooms[4]= conservatory;
 
             Position PosOfPantry = new Position(6, 4);
             Room pantry = new Room("Pantry", "This is the pantry, the Joker seems to have a lot of china plates around here ", 'P', PosOfPantry);
+            pantry.roomFeatureName = "look plates";
+            pantry.roomFeature = "looking at the plates you see a note it says- I knew you would come looking for your boss come to the bedroom if you dare ";
             diagram.placeRoom(PosOfPantry, pantry.getSymbol());
             rooms[5]= pantry;
 
@@ -78,12 +92,20 @@ public class Game{
             Position PosOfToilet = new Position(7, 2);
             Room toilet = new Room("Toilet", "Welcome to the Joker's toilet, Its a very bright room with a big shower and blue lights everywhere ",
                     'T', PosOfToilet);
+            toilet.roomFeatureName = "look wall";
+            toilet.roomFeature = "The wall looks suspicious its almost like its not a real wall maybe the joker has a secret room behind here, curiously you tried" +
+                    " to run through it... OUCH! no it was a real wall and now you hurt yourself ";
             diagram.placeRoom(PosOfToilet, toilet.getSymbol());
             rooms[6] = toilet;
 
             Position PosOfBedroom = new Position(6, 9);
             Room bedroom = new Room("Bedroom", "Welcome the Joker's bedroom. And yes it is as miserable as you may think its all grey with smiles on the walls",
                     'B', PosOfBedroom);
+            bedroom.roomFeatureName = "Look Under Bed";
+            bedroom.roomFeature = "You crouched and looked under the bed and you saw Batman! he is tied and is trying to escape,... you untied him and set him free";
+
+
+
             diagram.placeRoom(PosOfBedroom, bedroom.getSymbol());
             rooms[7] = bedroom;
 
@@ -178,7 +200,7 @@ public class Game{
                     userPosition.y = userPosition.y - 1; // you start from the bottom so you have to reduce the y value
                     UpdateMapWithUserPosition(userPosition);
                     currentlyInRoom= false;
-                    System.out.println("Your new location doesn't have a room you are somewhere in the jokers hallway enter 'map' to view the map");
+                    System.out.println("You moved north you are somewhere in the jokers hallway enter 'map' to view the map");
                 }
 
                 if(valid && thereIsRoom)
@@ -212,7 +234,7 @@ public class Game{
                     userPosition.y = userPosition.y + 1; // you start from the bottom so you have to reduce the y value
                     UpdateMapWithUserPosition(userPosition);
                     currentlyInRoom= false;
-                    System.out.println("Your new location doesn't have a room you are somewhere in the jokers hallway enter 'map' to view the map");
+                    System.out.println("You moved south you are somewhere in the jokers hallway enter 'map' to view the map");
                 }
                 if(valid && thereIsRoom)
                 {
@@ -244,7 +266,7 @@ public class Game{
                     userPosition.x = userPosition.x - 1; // you start from the bottom so you have to reduce the y value
                     UpdateMapWithUserPosition(userPosition);
                     currentlyInRoom= false;
-                    System.out.println("Your new location doesn't have a room you are somewhere in the jokers hallway enter 'map' to view the map");
+                    System.out.println("You moved west you are somewhere in the jokers hallway enter 'map' to view the map");
                 }
                 if(valid && thereIsRoom)
                 {
@@ -274,7 +296,7 @@ public class Game{
                     userPosition.x = userPosition.x + 1; // you start from the bottom so you have to reduce the y value
                     UpdateMapWithUserPosition(userPosition);
                     currentlyInRoom= false;
-                    System.out.println("Your new location doesn't have a room you are somewhere in the jokers hallway enter 'map' to view the map");
+                    System.out.println("You moved east you are somewhere in the jokers hallway enter 'map' to view the map");
                 }
                 if(valid && thereIsRoom)
                 {
