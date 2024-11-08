@@ -101,21 +101,22 @@ public class Game{
             Position PosOfBedroom = new Position(6, 9);
             Room bedroom = new Room("Bedroom", "Welcome the Joker's bedroom. And yes it is as miserable as you may think its all grey with smiles on the walls",
                     'B', PosOfBedroom);
-            bedroom.roomFeatureName = "Look Under Bed";
+            bedroom.roomFeatureName = "look under-Bed";
             bedroom.roomFeature = "You crouched and looked under the bed and you saw Batman! he is tied and is trying to escape,... you untied him and set him free";
-
-
-
             diagram.placeRoom(PosOfBedroom, bedroom.getSymbol());
             rooms[7] = bedroom;
 
             Position PosOfGarden = new Position(7, 8);
             Room Garden = new Room("Garden", "Take a deep breath you are out of the Joker's cave from here you can see his garden furniture", 'O', PosOfGarden);
+            Garden.roomFeatureName = "look over-fence";
+            Garden.roomFeature = "You hopped up and got a slight glimpse of whats around the compound - lots of water, lets hope the joker doesn't throw you into it ";
             diagram.placeRoom(PosOfGarden, Garden.getSymbol());
             rooms[8] = Garden;
 
             Position PosOfTerrace = new Position(9, 6);
             Room Terrace = new Room("Terrace", " You have managed to make it to the terrace of the house in the cave here you can see faint lights in the distance and a fancy helicopter", 'T', PosOfTerrace);
+            Terrace.roomFeatureName = "look helicopter";
+            Terrace.roomFeature = "You look at the helicopter in the distance and see a bat logo, looks like Batman's butler is also searching for him";
             diagram.placeRoom(PosOfTerrace, Terrace.getSymbol());
             rooms[9] = Terrace;
         }
