@@ -22,6 +22,8 @@ public class Score {
     }
     public void solvePuzzle()
     {
+        puzzlesSolved++;
+        currentScore += PUZZLE_VALUE;
 
     }
     public double getScore()

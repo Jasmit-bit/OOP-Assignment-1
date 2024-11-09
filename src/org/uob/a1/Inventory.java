@@ -21,6 +21,7 @@ public class Inventory {
                 if(inventory[i] == null)
                 {
                     inventory[i] = item;
+                    break;
                 }
             }
 
@@ -34,7 +35,8 @@ public class Inventory {
     {
         for (int i = 0; i < numOfItems; i++)
         {
-            if(inventory[i].equals(item))
+
+            if(inventory[i] != null && inventory[i].equals(item))
             {
                 return i;
             }
@@ -56,17 +58,15 @@ public class Inventory {
     }
     public String displayInventory()
     {
-        StringBuilder InventoryAsAString = new StringBuilder();
-        for(int i = 0 ; i < numOfItems ; i++)
+        String inventoryAsAString = "";
+        for(int i = 0; i < numOfItems; i++)
         {
-            if(inventory[i] != null)
-            {
-                InventoryAsAString.append(inventory[i]);
-                InventoryAsAString.append(" ");
-            }
+
+                inventoryAsAString += inventory[i] + " ";
 
         }
-        return InventoryAsAString.toString();
+
+        return inventoryAsAString;
     }
 
    

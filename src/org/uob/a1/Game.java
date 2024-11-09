@@ -185,11 +185,15 @@ public class Game{
             if(currentRoom.getName().equals("Main Lobby"))
             {
                 System.out.println(currentRoom.roomFeature);
+                System.out.println("Stuck to the note there is a code which says code for the bedroom would you like to pick up the code?");
+                System.out.println("enter 'take code' to pick up the code.");
             }
             else
             {
                 System.out.println("That feature doesnt exist in this room!");
             }
+
+
         }
         else if(userWord.equals("look batmobile"))
         {
@@ -290,6 +294,13 @@ public class Game{
                 System.out.println("That feature doesnt exist in this room!");
             }
         }
+        else if(userWord.equals("look code"))
+        {
+            if(inventory.hasItem("code") != 1)
+            {
+                System.out.println("This the code you picked up from the Main Lobby it grants you access to the Joker's bedroom");
+            }
+        }
 
     }
 
@@ -297,15 +308,12 @@ public class Game{
     {
         int givenNumber = 0;
         givenNumber = 1 + (int)(Math.random() * 11);
-
-
         return givenNumber;
 
     }
 
     public static void play21()
     {
-
         boolean userWins = false;
 
         int card1forComputer = generateNumber();
@@ -396,7 +404,6 @@ public class Game{
 
 
     }
-
 
 
     // responsible for the user's movement between rooms and the map
@@ -606,6 +613,11 @@ public class Game{
             play21();
 
         }
+        else if(userMove.equals("take code")&& currentRoom.getName().equals("Main Lobby"))
+        {
+            inventory.addItem("code");
+            System.out.println("--> the code has been added to your inventory");
+        }
         else
         {
             System.out.println("That move was not recognised please enter a valid command") ;
@@ -749,6 +761,15 @@ public class Game{
 
     public static void main(String[] args)
     {
+        Inventory iv = new Inventory();
+        iv.addItem("sword");
+        iv.addItem("spear");
+        iv.removeItem("sword");
+
+        System.out.println(iv.hasItem("sword"));
+
+        scanner.nextLine();
+
         System.out.println("Welcome player, in this game you are a detective which has been tasked with finding batman as he has gone missing, probe the compound and find Batman");
         createRooms();
         System.out.println();
