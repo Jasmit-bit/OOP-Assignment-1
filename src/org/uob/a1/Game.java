@@ -297,6 +297,8 @@ public class Game{
     {
         int givenNumber = 0;
         givenNumber = 1 + (int)(Math.random() * 11);
+
+
         return givenNumber;
 
     }
@@ -318,7 +320,7 @@ public class Game{
         int cardScoreForUser = card1forUser + card2forUser;
         boolean userBust = false;
 
-        System.out.println("You currently have a " + card1forUser + " card and a " + card2forUser + " card in your hand totalling to " + card1forUser+card2forUser);
+        System.out.println("You currently have a " + card1forUser + " card and a " + card2forUser + " card in your hand totalling to " + cardScoreForUser);
 
         while(true)
         {
@@ -346,7 +348,7 @@ public class Game{
         }
         if(userBust == false) {
             System.out.println("The dealer reveals his hand");
-            System.out.println("The dealer currently has a " + card1forComputer + " card and a " + card2forComputer + " card, totalling to" + card1forComputer + card2forComputer);
+            System.out.println("The dealer currently has a " + card1forComputer + " card and a " + card2forComputer + " card, totalling to " + cardScoreForComputer);
             while (cardScoreForComputer < 17) {
                 if (cardScoreForComputer < 17) {
                     int newCard = generateNumber();
@@ -599,6 +601,11 @@ public class Game{
         {
             clearScreen();
         }
+        else if(userMove.equals("play 21") && currentRoom.getName().equals("Drinks Bar"))
+        {
+            play21();
+
+        }
         else
         {
             System.out.println("That move was not recognised please enter a valid command") ;
@@ -608,10 +615,10 @@ public class Game{
 
     }
 
+    // checks if there is a puzzle for entering the given room
     public static void CheckIfRoomHasPuzzle(Room newRoom)
     {
         String roomName = newRoom.getName();
-
         switch (roomName)
         {
             case "Toilet":
@@ -619,6 +626,9 @@ public class Game{
                 break;
             case "Bedroom":
                 enterBedroom();
+                break;
+            case "Drinks Bar" :
+                System.out.println("There seems to be a moving statue which wants to play blackjack with you, if you want to play enter 'play 21'");
                 break;
         }
     }
@@ -665,7 +675,6 @@ public class Game{
             System.out.println();
         }
     }
-
 
 
     //Puzzle 1 to enter the toilet you need to flip the light switch on
@@ -738,11 +747,8 @@ public class Game{
     }
 
 
-
     public static void main(String[] args)
     {
-
-
         System.out.println("Welcome player, in this game you are a detective which has been tasked with finding batman as he has gone missing, probe the compound and find Batman");
         createRooms();
         System.out.println();
