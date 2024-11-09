@@ -13,6 +13,7 @@ public class Game{
     public static boolean currentlyInRoom ;
 
 
+
     public static Room getRoom(int x, int y)
     {
         Room roomToReturn = null;
@@ -301,6 +302,17 @@ public class Game{
                 System.out.println("This the code you picked up from the Main Lobby it grants you access to the Joker's bedroom");
             }
         }
+        else if(userWord.equals("look cards"))
+        {
+            if(inventory.hasItem("Deck Of Cards")!= -1)
+            {
+                System.out.println("The cards which you are holding a very slim and sharp around the edges these could do serious damage if thrown");
+            }
+            else
+            {
+                System.out.println("You don't have this item");
+            }
+        }
 
     }
 
@@ -365,9 +377,11 @@ public class Game{
                 }
                 if (cardScoreForComputer > 21) {
                     System.out.println("The dealer has gone bust you win");
+                    score.solvePuzzle();
                     userWins = true;
                     computerBust = true;
                     break;
+
                 }
             }
         }
@@ -377,6 +391,7 @@ public class Game{
             if(cardScoreForUser > cardScoreForComputer)
             {
                 System.out.println("You win");
+                score.solvePuzzle();
                 userWins = true;
             }
             else if(cardScoreForUser < cardScoreForComputer)
@@ -392,7 +407,7 @@ public class Game{
         if(userWins)
         {
             inventory.addItem("Deck Of Cards");
-            System.out.println("Congratulations for winning, the moving statue gave you a deck of cards");
+            System.out.println("Congratulations for winning, the moving statue gave you a deck of cards, if you would like more information about the cards please enter 'look cards'");
             System.out.println("--->>>> A deck of cards has been added to your inventory");
         }
 
@@ -404,7 +419,6 @@ public class Game{
 
 
     }
-
 
     // responsible for the user's movement between rooms and the map
     public static void getUserDirection(Position userPosition , String userMove)
@@ -438,9 +452,15 @@ public class Game{
 
                 if(valid && thereIsRoom)
                 {
+
+
                     diagram.placeRoom(userPosition, '.');
                     userPosition.y = userPosition.y - 1;
                     currentRoom = getRoom(userPosition.x, userPosition.y);
+                    if(score.roomVisited(currentRoom.getName()) == false)
+                    {
+                        score.AddRoom(currentRoom);
+                    }
                     System.out.println("You are now entering the " + currentRoom.getName());
                     System.out.println("Enter '" +  currentRoom.roomFeatureName + "' for a more detailed description of this rooms feature");
                     currentlyInRoom = true;
@@ -475,6 +495,10 @@ public class Game{
                     diagram.placeRoom(userPosition, '.');
                     userPosition.y = userPosition.y + 1;
                     currentRoom = getRoom(userPosition.x, userPosition.y);
+                    if(score.roomVisited(currentRoom.getName()) == false)
+                    {
+                        score.AddRoom(currentRoom);
+                    }
                     currentlyInRoom = true;
                     System.out.println("You are now entering the " + currentRoom.getName());
                     CheckIfRoomHasPuzzle(currentRoom);
@@ -510,7 +534,12 @@ public class Game{
                     userPosition.x = userPosition.x - 1;
                     currentRoom = getRoom(userPosition.x, userPosition.y);
                     currentlyInRoom = true;
+                    if(score.roomVisited(currentRoom.getName()) == false)
+                    {
+                        score.AddRoom(currentRoom);
+                    }
                     System.out.println("You are now entering the " + currentRoom.getName());
+
                     CheckIfRoomHasPuzzle(currentRoom);
                     System.out.println("Enter '" +  currentRoom.roomFeatureName + "' for a more detailed description of this rooms feature");
 
@@ -541,6 +570,10 @@ public class Game{
                     diagram.placeRoom(userPosition, '.');
                     userPosition.x = userPosition.x + 1;
                     currentRoom = getRoom(userPosition.x, userPosition.y);
+                    if(score.roomVisited(currentRoom.getName()) == false)
+                    {
+                        score.AddRoom(currentRoom);
+                    }
                     currentlyInRoom = true;
                     System.out.println("You are now entering the " + currentRoom.getName());
                     System.out.println("Enter '" +  currentRoom.roomFeatureName + "' for a more detailed description of this rooms feature");
@@ -618,6 +651,13 @@ public class Game{
             inventory.addItem("code");
             System.out.println("--> the code has been added to your inventory");
         }
+        else if(userMove.equals("take plunger") && currentRoom.getName().equals("Toilet"))
+        {
+            inventory.addItem("plunger");
+            System.out.println("--> the plunger has been added to your inventory");
+
+
+        }
         else
         {
             System.out.println("That move was not recognised please enter a valid command") ;
@@ -627,6 +667,23 @@ public class Game{
 
     }
 
+    public static void enterTerrace()
+    {
+        System.out.println("Looks like the stairs to get to the terrace are blocked");
+        System.out.println("It would sure help having a plunger to wall climb");
+        if(inventory.hasItem("plunger")!= -1)
+        {
+            System.out.println("Wait... you do have a plunger");
+            System.out.println("You used the plunger to grapple on the wall and get access to the roof");
+        }
+        else
+        {
+            System.out.println("It might be worth it to go pick up the plunger from the toilet");
+        }
+
+    }
+
+
     // checks if there is a puzzle for entering the given room
     public static void CheckIfRoomHasPuzzle(Room newRoom)
     {
@@ -634,6 +691,7 @@ public class Game{
         switch (roomName)
         {
             case "Toilet":
+
                 enterToiletPuzzle();
                 break;
             case "Bedroom":
@@ -642,9 +700,13 @@ public class Game{
             case "Drinks Bar" :
                 System.out.println("There seems to be a moving statue which wants to play blackjack with you, if you want to play enter 'play 21'");
                 break;
+            case "Terrace" :
+                enterTerrace();
+                break;
         }
     }
 
+    // add a previous location so that when they are not allowed in they get sent back or in the other constructor
     public static void enterBedroom()
     {
         if(inventory.hasItem("code") != -1)
@@ -668,6 +730,7 @@ public class Game{
 
 
             System.out.println("Access was granted, the code you picked up in the main lobby granted you the access ");
+            score.solvePuzzle();
 
         }
         else
@@ -733,6 +796,7 @@ public class Game{
                 case  "3":
                     System.out.println(">> You flipped switch 3 on");
                     lightTurnedOn = true;
+                    score.solvePuzzle();
                     System.out.println("  ..---..\n" +
                             " /       \\\n" +
                             "|         |\n" +
@@ -754,6 +818,8 @@ public class Game{
             }
         }
 
+        System.out.println("Wow there is a shiny new plunger in the corner its suction would help in certain scenarios would you like to take it?");
+        System.out.println("Enter 'take plunger' to pick up the plunger");
 
 
     }
@@ -761,15 +827,6 @@ public class Game{
 
     public static void main(String[] args)
     {
-        Inventory iv = new Inventory();
-        iv.addItem("sword");
-        iv.addItem("spear");
-        iv.removeItem("sword");
-
-        System.out.println(iv.hasItem("sword"));
-
-        scanner.nextLine();
-
         System.out.println("Welcome player, in this game you are a detective which has been tasked with finding batman as he has gone missing, probe the compound and find Batman");
         createRooms();
         System.out.println();
