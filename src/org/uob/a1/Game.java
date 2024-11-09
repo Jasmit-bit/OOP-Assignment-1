@@ -293,6 +293,108 @@ public class Game{
 
     }
 
+    public static int generateNumber()
+    {
+        int givenNumber = 0;
+        givenNumber = 1 + (int)(Math.random() * 11);
+        return givenNumber;
+
+    }
+
+    public static void play21()
+    {
+
+        boolean userWins = false;
+
+        int card1forComputer = generateNumber();
+        int card2forComputer = generateNumber();
+        int cardScoreForComputer = card1forComputer + card2forComputer;
+        boolean computerBust = false;
+
+
+
+        int card1forUser = generateNumber();
+        int card2forUser = generateNumber();
+        int cardScoreForUser = card1forUser + card2forUser;
+        boolean userBust = false;
+
+        System.out.println("You currently have a " + card1forUser + " card and a " + card2forUser + " card in your hand totalling to " + card1forUser+card2forUser);
+
+        while(true)
+        {
+            System.out.println("Would you like to hit or hold ? hit gives you another card and holding means you dont get another card");
+            String choice = scanner.nextLine();
+            if(choice.equals("hit"))
+            {
+                int newCard = generateNumber();
+                System.out.println("The dealer handed you a " + newCard);
+                cardScoreForUser += newCard;
+                if(cardScoreForUser >21)
+                {
+                    System.out.println("You have gone bust your new card takes you over 21, and the dealer wins");
+                    userBust = true;
+                    break;
+                }
+            } else if (choice.equals("hold")) {
+                break;
+            }
+            else
+            {
+                System.out.println("That is not a valid choice. Try again.");
+            }
+
+        }
+        if(userBust == false) {
+            System.out.println("The dealer reveals his hand");
+            System.out.println("The dealer currently has a " + card1forComputer + " card and a " + card2forComputer + " card, totalling to" + card1forComputer + card2forComputer);
+            while (cardScoreForComputer < 17) {
+                if (cardScoreForComputer < 17) {
+                    int newCard = generateNumber();
+                    System.out.println("The dealer drew a " + newCard);
+                    cardScoreForComputer += newCard;
+                }
+                if (cardScoreForComputer > 21) {
+                    System.out.println("The dealer has gone bust you win");
+                    userWins = true;
+                    computerBust = true;
+                    break;
+                }
+            }
+        }
+        if(userBust == false && computerBust == false)
+        {
+            System.out.println("Your total score is " + cardScoreForUser + " The dealers score is " + cardScoreForComputer );
+            if(cardScoreForUser > cardScoreForComputer)
+            {
+                System.out.println("You win");
+                userWins = true;
+            }
+            else if(cardScoreForUser < cardScoreForComputer)
+            {
+                System.out.println("You lose");
+            }
+            else if (cardScoreForUser == cardScoreForComputer)
+            {
+                System.out.println("Your scores are equal its a draw!");
+            }
+        }
+
+        if(userWins)
+        {
+            inventory.addItem("Deck Of Cards");
+            System.out.println("Congratulations for winning, the moving statue gave you a deck of cards");
+            System.out.println("--->>>> A deck of cards has been added to your inventory");
+        }
+
+
+
+
+
+
+
+
+    }
+
 
 
     // responsible for the user's movement between rooms and the map
@@ -642,7 +744,6 @@ public class Game{
 
 
         System.out.println("Welcome player, in this game you are a detective which has been tasked with finding batman as he has gone missing, probe the compound and find Batman");
-
         createRooms();
         System.out.println();
         currentRoom= getRoom(UserPosition.x, UserPosition.y);// the user starts off in the main lobby
