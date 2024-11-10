@@ -998,7 +998,7 @@ public class Game{
             }
             jokerHealth = jokerHealth- dmgToDeal;
             System.out.println("You dealt " + dmgToDeal + " to the joker");
-            if(jokerHealth >= 0)
+            if(jokerHealth > 0)
             {
                 System.out.println("The joker's current Health is " + jokerHealth);
 
