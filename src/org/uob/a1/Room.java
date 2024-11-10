@@ -4,7 +4,6 @@ public class Room {
     private String name,description;
     private  char symbol;
     private Position position;
-    public String artForTheRoom = " ";
     public String roomFeature = null;
     public String roomFeatureName = null;
 

@@ -48,15 +48,8 @@ public class Game{
             garage.roomFeature = "The light reflects off the pearly black paint of the car, but something white shines inside the car - a vintage Joker Card";
             garage.roomFeatureName = "look batmobile";
             diagram.placeRoom(PosOfGarage, garage.getSymbol());
-            {
-                garage.artForTheRoom = "                     @\n" +
-                        "               (__)    (__) _____/\n" +
-                        "            /| (oo) _  (oo)/----/_____    *\n" +
-                        "  _o\\______/_|\\_\\/_/_|__\\/|____|//////== *- *  * -\n" +
-                        " /_________   \\   00 |   00 |       /== -* * -\n" +
-                        "[_____/^^\\_____\\_____|_____/^^\\_____]     *- * -\n" +
-                        "      \\__/                 \\__/";
-            }
+
+
             rooms[1]= garage;
 
             Position PosOfKitchen = new Position(5, 2);
