@@ -884,6 +884,7 @@ public class Game{
                     System.out.println(">> You flipped switch 3 on");
                     lightTurnedOn = true;
                     score.solvePuzzle();
+                    // asci art from https://www.asciiart.eu/electronics/light-bulbs
                     System.out.println("  ..---..\n" +
                             " /       \\\n" +
                             "|         |\n" +
