@@ -355,6 +355,8 @@ public class Game{
     public static void play21()
     {
         boolean userWins = false;
+        boolean repeat = false;
+        do {
 
         int card1forComputer = generateNumber();
         int card2forComputer = generateNumber();
@@ -367,8 +369,8 @@ public class Game{
         int card2forUser = generateNumber();
         int cardScoreForUser = card1forUser + card2forUser;
         boolean userBust = false;
-        boolean repeat = false;
-        do {
+
+
 
 
 
@@ -1013,6 +1015,7 @@ public class Game{
 
     public static void main(String[] args)
     {
+
         System.out.println("Welcome player, in this game you are a detective which has been tasked with finding batman as he has gone missing, probe the compound and find Batman");
         createRooms();
         int count = 0; // gives you a chance of picking up the shield
