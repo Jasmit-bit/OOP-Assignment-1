@@ -11,6 +11,7 @@ public class Game{
     public static Scanner scanner = new Scanner(System.in);
     public static Score score = new Score(0);
     public static boolean currentlyInRoom ;
+    public static boolean canPickUpShield = false;
 
 
 
@@ -312,6 +313,21 @@ public class Game{
             {
                 System.out.println("You don't have this item");
             }
+        }
+        else if(userWord.equals("look plunger"))
+        {
+            if(inventory.hasItem("plunger") != -1)
+            {
+                System.out.println("This is a plunger you picked up from the toilet earlier, its suction would definitely help in some scenarios");
+            }
+            else
+            {
+                System.out.println("You dont have this item");
+            }
+        }
+        else
+        {
+            System.out.println("Unrecognized look statement");
         }
 
     }
@@ -658,6 +674,11 @@ public class Game{
 
 
         }
+        else if(userMove.equals("take shield") && currentRoom.getName().equals("Bedroom") && canPickUpShield == true)
+        {
+            inventory.addItem("shield");
+            System.out.println("shield was added to your inventory");
+        }
         else
         {
             System.out.println("That move was not recognised please enter a valid command") ;
@@ -691,7 +712,6 @@ public class Game{
         switch (roomName)
         {
             case "Toilet":
-
                 enterToiletPuzzle();
                 break;
             case "Bedroom":
@@ -731,6 +751,9 @@ public class Game{
 
             System.out.println("Access was granted, the code you picked up in the main lobby granted you the access ");
             score.solvePuzzle();
+            System.out.println("As soon as you open the door you see shield would you like to pick it up?");
+            System.out.println("to pick up the shield please enter get shield");
+            canPickUpShield = true;
 
         }
         else
@@ -740,6 +763,9 @@ public class Game{
 
             System.out.println(">> it may be worth it to go and pick up the code from the main lobby marked on the map as ");
         }
+
+
+
     }
 
 
@@ -823,6 +849,85 @@ public class Game{
 
 
     }
+
+    // finish this, this is the battle scene in which the joker is to fight with you and your items are the cards, and shield
+    public static void battleScene()
+    {
+        System.out.println("The joker pops out of nowhere and challenges you to a battle which you cant refuse");
+        int userHealth = 100;
+        int jokerHealth = 100;
+
+        int plungerDamage = 25;
+        int cardsDamage = 50;
+        int shieldHealth = 75;
+
+        int jokerDamage = 45;
+
+        while(jokerHealth>0)
+        {
+            int jokerDamageThisTurn = (int)(Math.random()*jokerDamage);
+
+            System.out.println("The joker is trying to attack you");
+            if(shieldHealth> 0) {
+                System.out.println("Please enter 'defend' if you would like to defend");
+                String userChoice = scanner.nextLine();
+                if(userChoice.equals("defend"))
+                {
+                    System.out.println("The joker dealt " + jokerDamageThisTurn + " damage");
+                    shieldHealth = shieldHealth - jokerDamageThisTurn;
+                    System.out.println("The shield's health is " + shieldHealth);
+                    if(shieldHealth<0)
+                    {
+                        System.out.println("The shield broke and the excess damage was dealt to you");
+                        userHealth += shieldHealth;
+                    }
+                }
+                else
+                {
+                  System.out.println("The joker dealt " + jokerDamageThisTurn + " damage");
+                  userHealth = userHealth - jokerDamageThisTurn;
+                  System.out.println("Your new health is " + userHealth);
+                }
+
+            }
+            System.out.println("Its now your turn to attack");
+            boolean validAnswer = false;
+            int dmgToDeal = 0;
+            while(validAnswer == false) {
+                System.out.println("The current items in your inventory are " + inventory.displayInventory());
+                System.out.println("Which item would you like to throw, just enter the items name");
+                String item = scanner.nextLine();
+                 dmgToDeal = 0;
+
+                if (item.equals("cards") && inventory.hasItem("cards") != -1) {
+                    dmgToDeal = cardsDamage;
+                    validAnswer = true;
+                }
+                else if (item.equals("plunger") && inventory.hasItem("plunger") != -1) {
+                    dmgToDeal = plungerDamage;
+                    validAnswer = true;
+                }
+                else {
+                    System.out.println("Invalid item to throw please enter a valid item");
+                }
+            }
+            jokerHealth = jokerHealth- dmgToDeal;
+            System.out.println("You dealt " + dmgToDeal + " to the joker");
+            if(jokerHealth > 0)
+            {
+                System.out.println("And you knocked out the Joker congrats");
+                score.solvePuzzle();
+            }
+            else
+            {
+                System.out.println("The joker's current Health is " + jokerHealth);
+            }
+
+
+        }
+
+    }
+
 
 
     public static void main(String[] args)
