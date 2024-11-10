@@ -351,7 +351,7 @@ public class Game{
 
     }
 
-    // plays blackjack in order to get the plunger
+    // plays blackjack in order to get the cards
     public static void play21()
     {
         boolean userWins = false;
@@ -441,7 +441,7 @@ public class Game{
         if(userWins)
         {
             repeat = false;
-            inventory.addItem("Deck Of Cards");
+            inventory.addItem("cards");
             System.out.println("Congratulations for winning, the moving statue gave you a deck of cards, if you would like more information about the cards please enter 'look cards'");
             System.out.println("--->>>> A deck of cards has been added to your inventory");
         }
