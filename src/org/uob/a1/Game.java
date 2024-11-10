@@ -976,6 +976,7 @@ public class Game{
             int dmgToDeal = 0;
             while(validAnswer == false) {
                 System.out.println("The current items in your inventory are " + inventory.displayInventory());
+                System.out.println("You can't throw your code or shield");
                 System.out.println("Which item would you like to throw, just enter the items name");
                 String item = scanner.nextLine();
                  dmgToDeal = 0;
@@ -989,6 +990,7 @@ public class Game{
                     validAnswer = true;
                     System.out.println("You threw the plunger it briefly stuck to the Joker's face before falling off");
                     System.out.println("--> the plunger was removed from your inventory");
+                    inventory.removeItem("plunger");
                 }
                 else {
                     System.out.println("Invalid item to throw please enter a valid item");
