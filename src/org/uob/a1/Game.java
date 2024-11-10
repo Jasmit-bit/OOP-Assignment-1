@@ -16,6 +16,7 @@ public class Game{
 
 
 
+    // this function gets the room given a set of coordinates its helpful for when the user move around the map and the map needs to be updated
     public static Room getRoom(int x, int y)
     {
         Room roomToReturn = null;
@@ -119,6 +120,7 @@ public class Game{
 
     }
 
+    // this function prints all the 'standard' commands letting the user know what happens
     public static void helpScreen()
     {
         System.out.println("\"move <direction>\" - (<direction> can be \"north\", \"south\", \"east\", \"west\"). The\n" +
@@ -137,6 +139,7 @@ public class Game{
         );
 
     }
+    // checks if we go outside the array for the map or not
     public static boolean checkIfNewPositionInMap(int x, int y)
     {
         boolean validUserInput = false;
@@ -152,6 +155,7 @@ public class Game{
 
         return validUserInput;
     }
+    // checks if there is a new room in the coordinate we are going to move to
     public static boolean checkIfThereIsARoom(int x, int y)
     {
 
@@ -165,11 +169,14 @@ public class Game{
         return false;
     }
 
+    //updates the users position
     public static void UpdateMapWithUserPosition(Position pos) {
         diagram.placeRoom(pos,'X');
     }
     // additional subroutine that deals with the look user inputs so that the other procedure doesn't become blocked up
     // Here I also make sure that the player is in the given room before letting them look at a specific place
+
+    // user input for look statements
     public static void dealWithLook(String userWord)
     {
         if(userWord.equals("look"))
@@ -335,6 +342,7 @@ public class Game{
 
     }
 
+    // generates a card number in order to play the blackjack game
     public static int generateNumber()
     {
         int givenNumber = 0;
@@ -343,6 +351,7 @@ public class Game{
 
     }
 
+    // plays blackjack in order to get the plunger
     public static void play21()
     {
         boolean userWins = false;
@@ -725,6 +734,7 @@ public class Game{
 
     }
 
+    // the puzzle for entering the terrace
     public static void enterTerrace(Position previousPosition)
     {
         System.out.println("Looks like the stairs to get to the terrace are blocked");
@@ -876,7 +886,7 @@ public class Game{
                 case  "3":
                     System.out.println(">> You flipped switch 3 on");
                     lightTurnedOn = true;
-                    score.solvePuzzle();
+
                     // asci art from https://www.asciiart.eu/electronics/light-bulbs
                     System.out.println("  ..---..\n" +
                             " /       \\\n" +
