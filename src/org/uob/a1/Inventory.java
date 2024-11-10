@@ -59,7 +59,7 @@ public class Inventory {
     public String displayInventory()
     {
         String inventoryAsAString = "";
-        for(int i = 0; i < numOfItems; i++)
+        for(int i = 0; i < MAX_ITEMS; i++)
         {
             if(inventory[i]!= null) {
                 inventoryAsAString += inventory[i] + " ";
