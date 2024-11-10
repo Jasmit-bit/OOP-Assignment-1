@@ -61,9 +61,9 @@ public class Inventory {
         String inventoryAsAString = "";
         for(int i = 0; i < numOfItems; i++)
         {
-
+            if(inventory[i]!= null) {
                 inventoryAsAString += inventory[i] + " ";
-
+            }
         }
 
         return inventoryAsAString;
