@@ -75,7 +75,7 @@ public class Game{
 
             drinksBar.roomFeature = "looking through the window into the garden you see lots of trees, but how is that possible underground with minimal sunlight maybe the windows in this place are not actually real windows";
             drinksBar.roomFeatureName = "look garden";
-                diagram.placeRoom(PosOfConservatory, conservatory.getSymbol());
+            diagram.placeRoom(PosOfConservatory, conservatory.getSymbol());
             rooms[4]= conservatory;
 
             Position PosOfPantry = new Position(0, 0);
@@ -182,7 +182,7 @@ public class Game{
         if(userWord.equals("look"))
         {
             if(currentlyInRoom){
-            System.out.println(currentRoom.getDescription());}
+                System.out.println(currentRoom.getDescription());}
             else
             {
                 System.out.println("");
@@ -358,107 +358,107 @@ public class Game{
         boolean repeat = false;
         do {
 
-        int card1forComputer = generateNumber();
-        int card2forComputer = generateNumber();
-        int cardScoreForComputer = card1forComputer + card2forComputer;
-        boolean computerBust = false;
+            int card1forComputer = generateNumber();
+            int card2forComputer = generateNumber();
+            int cardScoreForComputer = card1forComputer + card2forComputer;
+            boolean computerBust = false;
 
 
 
-        int card1forUser = generateNumber();
-        int card2forUser = generateNumber();
-        int cardScoreForUser = card1forUser + card2forUser;
-        boolean userBust = false;
+            int card1forUser = generateNumber();
+            int card2forUser = generateNumber();
+            int cardScoreForUser = card1forUser + card2forUser;
+            boolean userBust = false;
 
 
 
 
 
-        System.out.println("You currently have a " + card1forUser + " card and a " + card2forUser + " card in your hand totalling to " + cardScoreForUser);
+            System.out.println("You currently have a " + card1forUser + " card and a " + card2forUser + " card in your hand totalling to " + cardScoreForUser);
 
-        while(true)
-        {
-            System.out.println("Would you like to hit or hold ? hit gives you another card and holding means you dont get another card");
-            String choice = scanner.nextLine();
-            if(choice.equals("hit"))
+            while(true)
             {
-                int newCard = generateNumber();
-                System.out.println("The dealer handed you a " + newCard);
-                cardScoreForUser += newCard;
-                if(cardScoreForUser >21)
+                System.out.println("Would you like to hit or hold ? hit gives you another card and holding means you dont get another card");
+                String choice = scanner.nextLine();
+                if(choice.equals("hit"))
                 {
-                    System.out.println("You have gone bust your new card takes you over 21, and the dealer wins");
-                    userBust = true;
+                    int newCard = generateNumber();
+                    System.out.println("The dealer handed you a " + newCard);
+                    cardScoreForUser += newCard;
+                    if(cardScoreForUser >21)
+                    {
+                        System.out.println("You have gone bust your new card takes you over 21, and the dealer wins");
+                        userBust = true;
+                        break;
+                    }
+                } else if (choice.equals("hold")) {
                     break;
                 }
-            } else if (choice.equals("hold")) {
-                break;
-            }
-            else
-            {
-                System.out.println("That is not a valid choice. Try again.");
-            }
-
-        }
-        if(userBust == false) {
-            System.out.println("The dealer reveals his hand");
-            System.out.println("The dealer currently has a " + card1forComputer + " card and a " + card2forComputer + " card, totalling to " + cardScoreForComputer);
-            while (cardScoreForComputer < 17) {
-                if (cardScoreForComputer < 17) {
-                    int newCard = generateNumber();
-                    System.out.println("The dealer drew a " + newCard);
-                    cardScoreForComputer += newCard;
+                else
+                {
+                    System.out.println("That is not a valid choice. Try again.");
                 }
-                if (cardScoreForComputer > 21) {
-                    System.out.println("The dealer has gone bust you win");
+
+            }
+            if(userBust == false) {
+                System.out.println("The dealer reveals his hand");
+                System.out.println("The dealer currently has a " + card1forComputer + " card and a " + card2forComputer + " card, totalling to " + cardScoreForComputer);
+                while (cardScoreForComputer < 17) {
+                    if (cardScoreForComputer < 17) {
+                        int newCard = generateNumber();
+                        System.out.println("The dealer drew a " + newCard);
+                        cardScoreForComputer += newCard;
+                    }
+                    if (cardScoreForComputer > 21) {
+                        System.out.println("The dealer has gone bust you win");
+                        score.solvePuzzle();
+                        userWins = true;
+                        computerBust = true;
+                        break;
+
+                    }
+                }
+            }
+            if(userBust == false && computerBust == false)
+            {
+                System.out.println("Your total score is " + cardScoreForUser + " The dealers score is " + cardScoreForComputer );
+                if(cardScoreForUser > cardScoreForComputer)
+                {
+                    System.out.println("You win");
                     score.solvePuzzle();
                     userWins = true;
-                    computerBust = true;
-                    break;
-
+                }
+                else if(cardScoreForUser < cardScoreForComputer)
+                {
+                    System.out.println("You lose");
+                }
+                else if (cardScoreForUser == cardScoreForComputer)
+                {
+                    System.out.println("Your scores are equal its a draw!");
                 }
             }
-        }
-        if(userBust == false && computerBust == false)
-        {
-            System.out.println("Your total score is " + cardScoreForUser + " The dealers score is " + cardScoreForComputer );
-            if(cardScoreForUser > cardScoreForComputer)
-            {
-                System.out.println("You win");
-                score.solvePuzzle();
-                userWins = true;
-            }
-            else if(cardScoreForUser < cardScoreForComputer)
-            {
-                System.out.println("You lose");
-            }
-            else if (cardScoreForUser == cardScoreForComputer)
-            {
-                System.out.println("Your scores are equal its a draw!");
-            }
-        }
 
-        if(userWins)
-        {
-            repeat = false;
-            inventory.addItem("cards");
-            System.out.println("Congratulations for winning, the moving statue gave you a deck of cards, if you would like more information about the cards please enter 'look cards'");
-            System.out.println("--->>>> A deck of cards has been added to your inventory");
-        }
-        else
-        {
-            System.out.println("You lost this time but would you like to replay? enter 'replay' to play again");
-            String userChoice = scanner.nextLine();
-            userChoice = userChoice.toLowerCase();
-            if(userChoice.equals("replay"))
+            if(userWins)
             {
-                repeat = true;
+                repeat = false;
+                inventory.addItem("cards");
+                System.out.println("Congratulations for winning, the moving statue gave you a deck of cards, if you would like more information about the cards please enter 'look cards'");
+                System.out.println("--->>>> A deck of cards has been added to your inventory");
             }
             else
             {
-                repeat = false;
+                System.out.println("You lost this time but would you like to replay? enter 'replay' to play again");
+                String userChoice = scanner.nextLine();
+                userChoice = userChoice.toLowerCase();
+                if(userChoice.equals("replay"))
+                {
+                    repeat = true;
+                }
+                else
+                {
+                    repeat = false;
+                }
             }
-        }
         }while(repeat == true);
 
 
@@ -551,15 +551,15 @@ public class Game{
                     CheckIfRoomHasPuzzle(currentRoom,previousPosition);
 
                     if(refusedEntry == false) {
-                    if(score.roomVisited(currentRoom.getName()) == false)
-                    {
-                        score.AddRoom(currentRoom);
-                    }
-                    currentlyInRoom = true;
-                    System.out.println("You are now entering the " + currentRoom.getName());
+                        if(score.roomVisited(currentRoom.getName()) == false)
+                        {
+                            score.AddRoom(currentRoom);
+                        }
+                        currentlyInRoom = true;
+                        System.out.println("You are now entering the " + currentRoom.getName());
 
-                    System.out.println("Enter '" +  currentRoom.roomFeatureName + "' for a more detailed description of this rooms feature");
-}
+                        System.out.println("Enter '" +  currentRoom.roomFeatureName + "' for a more detailed description of this rooms feature");
+                    }
 
                 }
 
@@ -664,74 +664,74 @@ public class Game{
         else {
 
 
-        if(userMove.equals("move north") || userMove.equals("move south")||userMove.equals("move west") || userMove.equals("move east"))
-        {
-            getUserDirection(UserPosition,userMove);
+            if(userMove.equals("move north") || userMove.equals("move south")||userMove.equals("move west") || userMove.equals("move east"))
+            {
+                getUserDirection(UserPosition,userMove);
 
-        }
-        else if(userMove.equals("help"))
-        {
-            helpScreen();
-        }
-        else if(userMove.equals("quit"))
-        {
-            System.exit(0);
-        }
-        else if(userMove.equals("inventory"))
-        {
-            System.out.println(inventory.displayInventory());
-        }
-        else if(userMove.equals("score"))
-        {
-            System.out.println(score.getScore());
-        }
-        else if(userMove.equals("map"))
-        {
-            if(currentlyInRoom) {
-                System.out.println(diagram.display());
-                System.out.println("You are currently in the " + currentRoom.getName() + " which is marked on the map as " + currentRoom.getSymbol());
+            }
+            else if(userMove.equals("help"))
+            {
+                helpScreen();
+            }
+            else if(userMove.equals("quit"))
+            {
+                System.exit(0);
+            }
+            else if(userMove.equals("inventory"))
+            {
+                System.out.println(inventory.displayInventory());
+            }
+            else if(userMove.equals("score"))
+            {
+                System.out.println(score.getScore());
+            }
+            else if(userMove.equals("map"))
+            {
+                if(currentlyInRoom) {
+                    System.out.println(diagram.display());
+                    System.out.println("You are currently in the " + currentRoom.getName() + " which is marked on the map as " + currentRoom.getSymbol());
+                }
+                else
+                {
+                    System.out.println(diagram.display());
+                    System.out.println("Your current location is marked with an X");
+                }
+            }
+            else if(userMove.equals("clear"))
+            {
+                clearScreen();
+            }
+            else if(userMove.equals("play 21") && currentRoom.getName().equals("Drinks Bar"))
+            {
+                play21();
+
+            }
+            else if(userMove.equals("take code")&& currentRoom.getName().equals("Main Lobby"))
+            {
+                inventory.addItem("code");
+                System.out.println("--> the code has been added to your inventory");
+            }
+            else if(userMove.equals("take plunger") && currentRoom.getName().equals("Toilet"))
+            {
+                inventory.addItem("plunger");
+                System.out.println("--> the plunger has been added to your inventory");
+
+
+            }
+            else if(userMove.equals("get shield") && currentRoom.getName().equals("Bedroom") && canPickUpShield == true)
+            {
+                inventory.addItem("shield");
+                System.out.println("shield was added to your inventory");
+            }
+            else if(userMove.equals("start fight") && currentRoom.getName().equals("Bedroom"))
+            {
+                battleScene();
             }
             else
             {
-                System.out.println(diagram.display());
-                System.out.println("Your current location is marked with an X");
+                System.out.println("That move was not recognised please enter a valid command") ;
+                checkUserMove();
             }
-        }
-        else if(userMove.equals("clear"))
-        {
-            clearScreen();
-        }
-        else if(userMove.equals("play 21") && currentRoom.getName().equals("Drinks Bar"))
-        {
-            play21();
-
-        }
-        else if(userMove.equals("take code")&& currentRoom.getName().equals("Main Lobby"))
-        {
-            inventory.addItem("code");
-            System.out.println("--> the code has been added to your inventory");
-        }
-        else if(userMove.equals("take plunger") && currentRoom.getName().equals("Toilet"))
-        {
-            inventory.addItem("plunger");
-            System.out.println("--> the plunger has been added to your inventory");
-
-
-        }
-        else if(userMove.equals("get shield") && currentRoom.getName().equals("Bedroom") && canPickUpShield == true)
-        {
-            inventory.addItem("shield");
-            System.out.println("shield was added to your inventory");
-        }
-        else if(userMove.equals("start fight") && currentRoom.getName().equals("Bedroom"))
-        {
-            battleScene();
-        }
-        else
-        {
-            System.out.println("That move was not recognised please enter a valid command") ;
-            checkUserMove();
-        }
         }
 
     }
@@ -965,9 +965,9 @@ public class Game{
                 else
                 {
                     System.out.println("You did not defend");
-                  System.out.println("The joker dealt " + jokerDamageThisTurn + " damage");
-                  userHealth = userHealth - jokerDamageThisTurn;
-                  System.out.println("Your new health is " + userHealth);
+                    System.out.println("The joker dealt " + jokerDamageThisTurn + " damage");
+                    userHealth = userHealth - jokerDamageThisTurn;
+                    System.out.println("Your new health is " + userHealth);
                 }
 
             }
@@ -975,11 +975,11 @@ public class Game{
             boolean validAnswer = false;
             int dmgToDeal = 0;
             while(validAnswer == false) {
-                System.out.println("The current items in your inventory are " + inventory.displayInventory());
+
                 System.out.println("You can't throw your code or shield");
                 System.out.println("Which item would you like to throw, just enter the items name");
                 String item = scanner.nextLine();
-                 dmgToDeal = 0;
+                dmgToDeal = 0;
 
                 if (item.equals("cards") && inventory.hasItem("cards") != -1) {
                     dmgToDeal = cardsDamage;
