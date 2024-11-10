@@ -6,7 +6,7 @@ public class Game{
     public static Room[] rooms = new Room[10];
     public static Map diagram = new Map(6,6);
     public static Room currentRoom;
-    public static Position UserPosition = new Position(8,1);// starts in the main lobby
+    public static Position UserPosition = new Position(4,2);// starts in the main lobby
     public static Inventory inventory = new Inventory();
     public static Scanner scanner = new Scanner(System.in);
     public static Score score = new Score(0);
@@ -34,7 +34,7 @@ public class Game{
     {
         {
             //first I will create all the rooms
-            Position PosOfMainLobby = new Position(8, 1);
+            Position PosOfMainLobby = new Position(4, 2);
             Room mainLobby = new Room("Main Lobby", "Hmm this room seems to have loads of sofas does the Joker actually have this many friends to be using all these sofas",
                     'M', PosOfMainLobby);
             mainLobby.roomFeature = "The note reads - 'Oh Robin! I knew you would come you are so predictable go free him if you can!'";
@@ -42,7 +42,7 @@ public class Game{
             diagram.placeRoom(PosOfMainLobby, mainLobby.getSymbol());
             rooms[0]= mainLobby;
 
-            Position PosOfGarage = new Position(3, 4);
+            Position PosOfGarage = new Position(1, 3);
             Room garage = new Room("Garage", "Wow the Joker has a garage with a very nice collection, wait is that the batmobile" +
                     " Batman has to be somewhere around here, enter 'look batmobile' to have a closer look at the batmobile", 'G', PosOfGarage);
             garage.roomFeature = "The light reflects off the pearly black paint of the car, but something white shines inside the car - a vintage Joker Card";
@@ -59,7 +59,7 @@ public class Game{
             }
             rooms[1]= garage;
 
-            Position PosOfKitchen = new Position(8, 5);
+            Position PosOfKitchen = new Position(5, 2);
             Room kitchen = new Room("Kitchen", "Gawd Damn the Joker has some expensive taste in counter tops," +
                     "the kitchen has a fancy wood decor and loads of appliances, enter 'look counter' ", 'K', PosOfKitchen);
             kitchen.roomFeature = "The counters have shreds of cheese all over them, the Joker must know Batman is allergic to cheese, he must be trying to hurt him";
@@ -67,7 +67,7 @@ public class Game{
             kitchen.roomFeatureName = "look counter";
             rooms[2]= kitchen;
 
-            Position PosOfDrinksBar = new Position(9, 7);
+            Position PosOfDrinksBar = new Position(2, 1);
             Room drinksBar = new Room("Drinks Bar", " Looks like the Joker is quite the alcohol enjoyer he has a drinks bar in his basement " +
                     " there seems to be Henessy and grey goose bottles in the windows just like those in the student flats enter 'look window' to have a look through the window", 'D', PosOfDrinksBar);
             drinksBar.roomFeature= "The window's glass is kept clean and is very see through, from the corner of your eye you see a light shining from the bedroom it might be worth investigating the bedroom";
@@ -75,7 +75,7 @@ public class Game{
             drinksBar.roomFeatureName = "look window";
             rooms[3]= drinksBar;
 
-            Position PosOfConservatory = new Position(5, 3);
+            Position PosOfConservatory = new Position(5, 4);
             Room conservatory = new Room("Conservatory", "This is a room meant to be enjoyed with the sun by the looks of it, its covered in glass shame that his lair is underground enter 'look garden' to have a look at the garden through the window",
                     'C', PosOfConservatory);
 
@@ -84,7 +84,7 @@ public class Game{
                 diagram.placeRoom(PosOfConservatory, conservatory.getSymbol());
             rooms[4]= conservatory;
 
-            Position PosOfPantry = new Position(6, 4);
+            Position PosOfPantry = new Position(0, 0);
             Room pantry = new Room("Pantry", "This is the pantry, the Joker seems to have a lot of china plates around here ", 'P', PosOfPantry);
             pantry.roomFeatureName = "look plates";
             pantry.roomFeature = "looking at the plates you see a note it says- I knew you would come looking for your boss come to the bedroom if you dare ";
@@ -92,7 +92,7 @@ public class Game{
             rooms[5]= pantry;
 
 
-            Position PosOfToilet = new Position(7, 2);
+            Position PosOfToilet = new Position(4, 0);
             Room toilet = new Room("Toilet", "Welcome to the Joker's toilet, Its a very bright room with a big shower and blue lights everywhere ",
                     'T', PosOfToilet);
             toilet.roomFeatureName = "look wall";
@@ -101,22 +101,22 @@ public class Game{
             diagram.placeRoom(PosOfToilet, toilet.getSymbol());
             rooms[6] = toilet;
 
-            Position PosOfBedroom = new Position(6, 9);
+            Position PosOfBedroom = new Position(0, 5);
             Room bedroom = new Room("Bedroom", "Welcome the Joker's bedroom. And yes it is as miserable as you may think its all grey with smiles on the walls",
                     'B', PosOfBedroom);
-            bedroom.roomFeatureName = "look under-Bed";
-            bedroom.roomFeature = "You crouched and looked under the bed and you saw Batman! he is tied and is trying to escape,... you untied him and set him free";
+            bedroom.roomFeatureName = "look bed";
+            bedroom.roomFeature = "Honing your focus on the bed your eyes are cursed by a wave of purple fabric, the Joker really does like to colour green";
             diagram.placeRoom(PosOfBedroom, bedroom.getSymbol());
             rooms[7] = bedroom;
 
-            Position PosOfGarden = new Position(7, 8);
+            Position PosOfGarden = new Position(3, 3);
             Room Garden = new Room("Garden", "Take a deep breath you are out of the Joker's cave from here you can see his garden furniture", 'O', PosOfGarden);
             Garden.roomFeatureName = "look over-fence";
             Garden.roomFeature = "You hopped up and got a slight glimpse of whats around the compound - lots of water, lets hope the joker doesn't throw you into it ";
             diagram.placeRoom(PosOfGarden, Garden.getSymbol());
             rooms[8] = Garden;
 
-            Position PosOfTerrace = new Position(9, 6);
+            Position PosOfTerrace = new Position(2, 4);
             Room Terrace = new Room("Terrace", " You have managed to make it to the terrace of the house in the cave here you can see faint lights in the distance and a fancy helicopter", 'U', PosOfTerrace);
             Terrace.roomFeatureName = "look helicopter";
             Terrace.roomFeature = "You look at the helicopter in the distance and see a bat logo, looks like Batman's butler is also searching for him";
@@ -181,7 +181,12 @@ public class Game{
     {
         if(userWord.equals("look"))
         {
-            System.out.println(currentRoom.getDescription());
+            if(currentlyInRoom){
+            System.out.println(currentRoom.getDescription());}
+            else
+            {
+                System.out.println("");
+            }
         }
         else if(userWord.equals("look note"))
         {
@@ -264,7 +269,7 @@ public class Game{
                 System.out.println("That feature doesnt exist in this room!");
             }
         }
-        else if(userWord.equals("look under-bed"))
+        else if(userWord.equals("look bed"))
         {
             if(currentRoom.getName().equals("Bedroom"))
             {
@@ -326,6 +331,10 @@ public class Game{
                 System.out.println("You dont have this item");
             }
         }
+        else if(userWord.equals("look shield"))
+        {
+            System.out.println("This is a shiny new shield, it sure would help if someone attacked you");
+        }
         else
         {
             System.out.println("Unrecognized look statement");
@@ -356,6 +365,10 @@ public class Game{
         int card2forUser = generateNumber();
         int cardScoreForUser = card1forUser + card2forUser;
         boolean userBust = false;
+        boolean repeat = false;
+        do {
+
+
 
         System.out.println("You currently have a " + card1forUser + " card and a " + card2forUser + " card in your hand totalling to " + cardScoreForUser);
 
@@ -423,10 +436,27 @@ public class Game{
 
         if(userWins)
         {
+            repeat = false;
             inventory.addItem("Deck Of Cards");
             System.out.println("Congratulations for winning, the moving statue gave you a deck of cards, if you would like more information about the cards please enter 'look cards'");
             System.out.println("--->>>> A deck of cards has been added to your inventory");
         }
+        else
+        {
+            System.out.println("You lost this time but would you like to replay? enter 'replay' to play again");
+            String userChoice = scanner.nextLine();
+            userChoice = userChoice.toLowerCase();
+            if(userChoice.equals("replay"))
+            {
+                repeat = true;
+            }
+            else
+            {
+                repeat = false;
+            }
+        }
+        }while(repeat == true);
+
 
 
 
@@ -684,10 +714,14 @@ public class Game{
 
 
         }
-        else if(userMove.equals("take shield") && currentRoom.getName().equals("Bedroom") && canPickUpShield == true)
+        else if(userMove.equals("get shield") && currentRoom.getName().equals("Bedroom") && canPickUpShield == true)
         {
             inventory.addItem("shield");
             System.out.println("shield was added to your inventory");
+        }
+        else if(userMove.equals("start fight") && currentRoom.getName().equals("Bedroom"))
+        {
+            battleScene();
         }
         else
         {
@@ -774,6 +808,8 @@ public class Game{
             System.out.println("to pick up the shield please enter 'get shield'");
             canPickUpShield = true;
             refusedEntry = false;
+            System.out.println("(intense fighting music starts to play) The Joker pops up and invites you to a fight to free batman");
+            System.out.println("If you would like to initiate the fight please enter 'start fight' ");
 
 
         }
@@ -786,7 +822,7 @@ public class Game{
             refusedEntry = true;
             UpdateMapWithUserPosition(previousPosition);
 
-            System.out.println(">> it may be worth it to go and pick up the code from the main lobby marked on the map as ");
+            System.out.println(">> it may be worth it to go and pick up the code from the main lobby marked on the map as M ");
         }
 
 
@@ -881,6 +917,17 @@ public class Game{
     public static void battleScene()
     {
         System.out.println("The joker pops out of nowhere and challenges you to a battle which you cant refuse");
+        if(inventory.hasItem("cards") != -1)
+        {
+            System.out.println("Luckily you played 21 and won the deck of cards, which are very sharp and can be used as a weapon");
+        }
+        else
+        {
+            System.out.println("You don't have any viable items to fight the joker with, luckily the joker has some morals");
+            System.out.println("He gives you a hint to go get the cards from the Drinks Bar");
+            return;
+        }
+
         int userHealth = 100;
         int jokerHealth = 100;
 
@@ -911,6 +958,7 @@ public class Game{
                 }
                 else
                 {
+                    System.out.println("You did not defend");
                   System.out.println("The joker dealt " + jokerDamageThisTurn + " damage");
                   userHealth = userHealth - jokerDamageThisTurn;
                   System.out.println("Your new health is " + userHealth);
@@ -944,8 +992,10 @@ public class Game{
             System.out.println("You dealt " + dmgToDeal + " to the joker");
             if(jokerHealth > 0)
             {
-                System.out.println("And you knocked out the Joker congrats");
+                System.out.println("And you injured the Joker");
+                System.out.println("The joker screams -  NOOOO HOW COULD THIS BE I WILL BE BACK FOR THE BOTH OF YOU");
                 score.solvePuzzle();
+                System.out.println("You finished the game! you can continue to roam and exploring the map or you can quit");
             }
             else
             {
@@ -969,47 +1019,10 @@ public class Game{
         System.out.println();
         System.out.println("Please enter your command or enter help to learn more about commands in the game");
 
-        while(!(currentRoom.getName().equals("Bedroom"))&& count != 2 && inventory.hasItem("code")!= -1) {
-            checkUserMove();// try find a way so that you have a chance of picking up the shield
-            if(currentRoom.getName().equals("Bedroom"))
-            {
-                count ++;
-            }
-        }
-        // now when that loop ends you should end up in the bedroom
-        System.out.println("(intense fighting music starts to play) The Joker pops up and invites you to a fight to free batman");
-        if(inventory.hasItem("cards") != -1)
+        while(true)
         {
-            System.out.println("Luckily you ended up getting the deck of cards those can be used to fight the joker");
-            battleScene();
+            checkUserMove();
         }
-        else
-        {
-            System.out.println("You don't have any viable items to fight the joker with, luckily the joker has some morals");
-            System.out.println("He gives you a hint to go get the cards from the Drinks Bar");
-            while(currentRoom.getName().equals("Bedroom") == false && inventory.hasItem("cards") != -1)
-            {
-                checkUserMove();
-                if(currentRoom.getName().equals("Bedroom") == true && inventory.hasItem("cards") != -1)
-                {
-                    System.out.println("You still don't have the cards! go get the cards");
-                }
-            }
-            battleScene();
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
 
 }
