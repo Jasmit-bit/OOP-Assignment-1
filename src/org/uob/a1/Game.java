@@ -1019,14 +1019,6 @@ public class Game{
     public static void main(String[] args)
     {
 
-        Inventory iv = new Inventory();
-        iv.addItem("hi");
-        iv.addItem("wow");
-        iv.addItem("oops");
-        iv.removeItem("hi");
-        System.out.println(iv.displayInventory());
-        scanner.nextLine();
-
         System.out.println("Welcome player, in this game you are a detective which has been tasked with finding batman as he has gone missing, probe the compound and find Batman");
         createRooms();
         int count = 0; // gives you a chance of picking up the shield
